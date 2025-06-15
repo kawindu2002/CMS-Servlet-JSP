@@ -31,7 +31,7 @@
                     <li class="nav-item"><a class="nav-link" href="#" onclick="loadPage('employeePage.jsp')">Employee</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
                 </ul>
-                <form action="logout">
+                <form action="signout">
                     <button type="submit" class="btn btn-danger w-100 mt-auto" id="logout-btn">Logout</button>
                 </form>
             </div>

@@ -2,7 +2,7 @@ package com.kp.controller;
 
 import jakarta.servlet.annotation.WebServlet;
 
-@WebServlet("/signin")
+@WebServlet("/signout")
 public class SignOutServlet {
 
 }
