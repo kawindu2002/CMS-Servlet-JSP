@@ -30,7 +30,6 @@ public class SignInServlet extends HttpServlet {
           }else{
                resp.sendRedirect("signInPage.jsp");
           }
-          
      }
 }
 

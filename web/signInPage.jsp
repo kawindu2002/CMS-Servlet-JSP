@@ -16,7 +16,7 @@
     response.setDateHeader("Expires", 0); // Proxies
 %>
 
-<body class="container">
+<body class="container bg-dark text-light">
 <div class="row justify-content-center align-items-center vh-100">
     <div class="col-md-6">
         <h1 class="mt-5">Sign In</h1>
@@ -36,10 +36,9 @@
         </form>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 rounded bg-light">
         <img src="https://static.vecteezy.com/system/resources/previews/003/689/228/non_2x/online-registration-or-sign-up-login-for-account-on-smartphone-app-user-interface-with-secure-password-mobile-application-for-ui-web-banner-access-cartoon-people-illustration-vector.jpg" class="img-fluid" alt="Placeholder Image">
     </div>
-
 </div>
 
 <script src="js/jquery-3.7.1.min.js"></script>

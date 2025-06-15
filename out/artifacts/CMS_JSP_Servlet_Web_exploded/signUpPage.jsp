@@ -11,8 +11,8 @@
 </head>
 
 <body class="container bg-dark text-light">
-<div class="row justify-content-center align-items-center vh-100">
-  <div class="col-md-6">
+<div class="row justify-content-center align-items-center vh-100 ">
+  <div class="col-md-6 rounded bg-light">
     <img src="https://static.vecteezy.com/system/resources/previews/003/689/228/non_2x/online-registration-or-sign-up-login-for-account-on-smartphone-app-user-interface-with-secure-password-mobile-application-for-ui-web-banner-access-cartoon-people-illustration-vector.jpg" class="img-fluid" alt="Placeholder Image">
   </div>
 
@@ -30,11 +30,18 @@
         <input type="email" class="form-control" id="email" name="email" placeholder="example@example.com">
       </div>
       <div class="mb-3">
+        <label for="role" class="form-label">Login As:</label>
+        <select class="form-select" id="role" name="role">
+          <option value="admin" >Admin</option>
+          <option value="employee" >Employee</option>
+        </select>
+      </div>
+      <div class="mb-3">
         <label for="password" class="form-label">New Password</label>
         <input type="password" class="form-control" id="password" name="password" placeholder="*********">
       </div>
       <button type="submit" class="btn btn-primary">Sign Up</button>
-      <a href="signInPage.jsp" class="btn btn-secondary">Sign In</a> <!-- Better than submit for sign-in -->
+      <a href="signInPage.jsp" class="btn btn-secondary">Sign In</a>
     </form>
   </div>
 </div>
