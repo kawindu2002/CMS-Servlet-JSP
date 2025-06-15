@@ -36,7 +36,28 @@
         <div class="col-lg-10 col-sm-12" id="board">
             <div class="card bg-dark p-1 h-100">
                 <div class="card text-dark p-3 h-100" id="content">
-                    <h2>Welcome to CMS</h2>
+
+                <%--  ================================ --%>
+                <%
+                    String page = request.getParameter("page");
+
+                    if ("admin".equals(page)) {
+                %>
+                        <jsp:include page="admin.jsp" />
+                <%
+                    } else if ("employee".equals(page)) {
+                %>
+                        <jsp:include page="employee.jsp" />
+                <%
+                    } else {
+                %>
+                        <h2>⚠️ Page not found or unauthorized.</h2>
+                <%
+                    }
+                %>
+
+                <%--  ================================ --%>
+
                 </div>
             </div>
         </div>
