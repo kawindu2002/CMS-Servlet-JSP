@@ -16,72 +16,67 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 
-    <style>
-        #add-file {
-            display: none;
-        }
-
-        #profile-img {
-            width: 150px;
-            aspect-ratio: 1/1;
-            border: 3px solid #000000;
-        }
-    </style>
 </head>
 <body>
 
 <div class="container mt-1">
     <div class="d-flex justify-content-between align-items-center mb-2">
-        <h2>Manage Employees</h2>
-        <button class="btn btn-success" id="saveEmployeeBtn">Manage Complaints</button>
+        <h2>Manage Complaints</h2>
     </div>
 
-    <div class="row">
-        <div class="col-9">
-            <section class="form">
-                <div class="card p-3 mb-2 bg-body-tertiary rounded shadow">
-                    <form id="employeeForm" action="employee" method="post">
-                        <div class="mb-2">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="John">
-                        </div>
+    <form id="employeeForm" action="employee" method="post" class="row g-3">
+        <input type="hidden" name="_method" id="formMethod" value="put">
 
-                        <div class="mb-2">
-                            <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" placeholder="Colombo">
-                        </div>
-
-                        <div class="mb-2">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="john@example.com">
-                        </div>
-                    </form>
-                </div>
-            </section>
-        </div>
-
-        <div class="card col-3 mb-3 bg-body-tertiary text-center shadow">
-            <div class="card-body d-flex flex-column align-items-center">
-                <!-- Profile Image -->
-                <div class="my-3">
-                    <img src="../assets/images/default-user-img.png" alt="User" class="img-fluid rounded-circle" id="profile-img" style="width: 150px; aspect-ratio: 1/1; object-fit: cover;">
+        <div class="col-lg-9 col-sm-12">
+            <div class="card p-3 bg-body-tertiary rounded shadow">
+                <div class="mb-2">
+                    <label for="id" class="form-label">ID</label>
+                    <input type="text" disabled class="form-control" id="id" name="id" placeholder="1">
                 </div>
 
-                <!-- Hidden File Input -->
-                <input type="file" accept="image/jpeg, image/png, image/jpg" id="add-file" hidden>
+                <div class="mb-2">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Broken Chair">
+                </div>
 
-                <!-- Custom Upload Button (Label triggers file input) -->
-                <label for="add-file" class="btn btn-sm btn-dark mb-2 px-4">Add Image</label>
+                <div class="mb-2">
+                    <label for="description" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="description" name="description"
+                           placeholder="My office chair wheel is broken">
+                </div>
 
-                <!-- Action Buttons -->
-                <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-sm btn-warning px-2" id="updateEmployeeBtn">Update</button>
-                    <button type="button" class="btn btn-sm btn-secondary px-2" id="resetEmployeeBtn">Reset</button>
-                    <button type="button" class="btn btn-sm btn-danger px-2" id="deleteEmployeeBtn">Delete</button>
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-select" id="status" name="status">
+                        <option value="Pending">Pending</option>
+                        <option value="Resolved">Resolved</option>
+                        <option value="In Progress">In Progress</option>
+                    </select>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="col-lg-3 col-sm-12">
+            <div class="card p-3 bg-body-tertiary rounded shadow text-center h-100">
+                <div class="d-flex flex-column gap-2">
+
+                    <!-- Add -->
+                    <button type="submit"  name="action" value="add" class="btn btn-success">Add</button>
+
+                    <!-- Update -->
+                    <button type="submit" name="action" value="update" class="btn btn-warning">Update</button>
+
+                    <!-- Delete -->
+                    <button type="submit" name="action" value="delete" class="btn btn-danger">Delete</button>
+
+                    <!-- Reset -->
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
 
     <!-- Employee Table -->
     <div class="card shadow-sm">
@@ -98,7 +93,36 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
-                    <tbody id="employeeTableBody">
+                    <tbody>
+
+                    <%-- Assuming you passed List<Employee> from Servlet to JSP --%>
+<%--                    <%--%>
+<%--                        List<Employee> list = (List<Employee>) request.getAttribute("employees");--%>
+<%--                        if (list != null) {--%>
+<%--                            for (Employee emp : list) {--%>
+<%--                    %>--%>
+<%--                    <tr>--%>
+<%--                        <td><%= emp.getId() %></td>--%>
+<%--                        <td><%= emp.getName() %></td>--%>
+<%--                        <td><%= emp.getEmail() %></td>--%>
+<%--                        <td><%= emp.getAddress() %></td>--%>
+<%--                        <td>--%>
+<%--                            <form action="EmployeeController" method="post" style="display:inline;">--%>
+<%--                                <input type="hidden" name="id" value="<%= emp.getId() %>">--%>
+<%--                                <input type="hidden" name="action" value="edit">--%>
+<%--                                <button class="btn btn-warning btn-sm">Edit</button>--%>
+<%--                            </form>--%>
+<%--                            <form action="EmployeeController" method="post" style="display:inline;">--%>
+<%--                                <input type="hidden" name="id" value="<%= emp.getId() %>">--%>
+<%--                                <input type="hidden" name="action" value="delete">--%>
+<%--                                <button class="btn btn-danger btn-sm">Delete</button>--%>
+<%--                            </form>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                    <%--%>
+<%--                            }--%>
+<%--                        }--%>
+<%--                    %>--%>
                     </tbody>
                 </table>
             </div>

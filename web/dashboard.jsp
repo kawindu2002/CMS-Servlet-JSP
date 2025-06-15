@@ -24,15 +24,22 @@
 <div class="container-fluid bg-light p-4">
     <div class="row g-3">
         <div class="col-lg-2 col-sm-12" id="sidebar">
-            <div class="card d-flex flex-column bg-dark text-white p-3 h-100 text-center shadow">
-                <ul class="nav flex-column text-white">
-                    <li class="nav-item"><a class="nav-link no-hover active" href="#"><h4>CMS</h4></a></li>
+            <div class="card d-flex flex-column bg-dark text-white p-3 h-100 text-center shadow" style="min-height: 95vh;">
+                <!-- Sidebar Nav -->
+                <ul class="nav flex-column text-white mb-4">
+                    <li class="nav-item">
+                        <a class="nav-link no-hover active" href="#"><h3>CMS</h3></a>
+                    </li>
                 </ul>
+                <div class="flex-grow-1"></div>
+
+                <!-- Logout Button -->
                 <form action="signout">
-                    <button type="submit" class="btn btn-danger w-100 mt-auto" id="logout-btn">Logout</button>
+                    <button type="submit" class="btn btn-outline-danger w-100" id="logout-btn">Logout</button>
                 </form>
             </div>
         </div>
+
 
         <div class="col-lg-10 col-sm-12" id="board">
             <div class="card bg-dark p-1 h-100">
