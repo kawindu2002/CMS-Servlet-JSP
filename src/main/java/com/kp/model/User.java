@@ -4,7 +4,6 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 
 public class User {
@@ -13,6 +12,14 @@ public class User {
      private String email;
      private String role;
      private String password;
+     
+     public User(String name, String email, String role,String password) {
+          this.name = name;
+          this.email = email;
+          this.role = role;
+          this.password = password;
+          
+     }
      
      @Override
      public String toString() {

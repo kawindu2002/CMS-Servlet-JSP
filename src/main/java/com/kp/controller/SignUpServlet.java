@@ -1,5 +1,7 @@
 package com.kp.controller;
 
+import com.kp.dao.UserDao;
+import com.kp.model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,23 +15,20 @@ import java.io.IOException;
 public class SignUpServlet extends HttpServlet {
      @Override
      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//          String email = req.getParameter("email");
-//          String password = req.getParameter("password");
-//
-////          LoginDao loginDao = new LoginDao();
-//
-////          if (loginDao.checkLogin(username,password)) {
-//
-//          if (email.equals("kp@gmail.com") && password.equals("1111")) {
-//               HttpSession session = req.getSession();
-//               session.setAttribute("email", email);
-//               session.setAttribute("password", password);
-//               System.out.println("Success");
-//               resp.sendRedirect("dashboard.jsp");
-//
-//          }else{
-//               resp.sendRedirect("signInPage.jsp");
-//          }
+          String name = req.getParameter("name");
+          String email = req.getParameter("email");
+          String role = req.getParameter("role");
+          String password = req.getParameter("password");
+          
+          User user = new User(name,email,role,password);
+          UserDao userDao = new UserDao();
+          
+          if (userDao.saveUser(user)) {
+               resp.sendRedirect("signInPage.jsp");
+               
+          }else{
+               resp.sendRedirect("signUpPage.jsp");
+          }
      }
 }
 

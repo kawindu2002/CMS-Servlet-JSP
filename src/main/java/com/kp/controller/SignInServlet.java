@@ -1,5 +1,7 @@
 package com.kp.controller;
 
+import com.kp.dao.UserDao;
+import com.kp.model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,15 +18,15 @@ public class SignInServlet extends HttpServlet {
           String email = req.getParameter("email");
           String password = req.getParameter("password");
           
-//          LoginDao loginDao = new LoginDao();
+          UserDao userDao = new UserDao();
+          User user = userDao.getUser(email);
 
-//          if (loginDao.checkLogin(username,password)) {
-          
-          if (email.equals("kp@gmail.com") && password.equals("1111")) {
-               HttpSession session = req.getSession();
-               session.setAttribute("email", email);
-               session.setAttribute("password", password);
-               System.out.println("Success");
+          if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
+                HttpSession session = req.getSession();
+               session.setAttribute("name", user.getName());
+               session.setAttribute("email", user.getEmail());
+               session.setAttribute("role", user.getRole());
+               session.setAttribute("password", user.getPassword());
                resp.sendRedirect("dashboard.jsp");
                
           }else{
