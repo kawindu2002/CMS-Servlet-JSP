@@ -25,7 +25,7 @@
     </div>
 
     <form id="employeeForm" action="employee" method="post" class="row g-3">
-        <input type="hidden" name="_method" id="formMethod" value="post">
+        <input type="hidden" name="_method" id="formMethod" value="put">
 
         <div class="col-lg-9 col-sm-12">
             <div class="card p-3 bg-body-tertiary rounded shadow">
@@ -66,17 +66,12 @@
                     <!-- Update -->
                     <button type="submit" name="action" value="update" class="btn btn-warning">Update</button>
 
-                    <!-- Delete -->
-                    <button type="submit" name="action" value="delete" class="btn btn-danger">Delete</button>
-
                     <!-- Reset -->
                     <button type="reset" class="btn btn-secondary">Reset</button>
-
                 </div>
             </div>
         </div>
     </form>
-
 
     <!-- Employee Table -->
     <div class="card shadow-sm">
@@ -87,10 +82,13 @@
                     <thead class="table-dark">
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Actions</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Remark</th>
+                        <th>Created_at</th>
+                        <th>Updated_at</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -107,12 +105,12 @@
 <%--                        <td><%= emp.getEmail() %></td>--%>
 <%--                        <td><%= emp.getAddress() %></td>--%>
 <%--                        <td>--%>
-<%--                            <form action="EmployeeController" method="post" style="display:inline;">--%>
+<%--                            <form action="employee" method="post" style="display:inline;">--%>
 <%--                                <input type="hidden" name="id" value="<%= emp.getId() %>">--%>
 <%--                                <input type="hidden" name="action" value="edit">--%>
 <%--                                <button class="btn btn-warning btn-sm">Edit</button>--%>
 <%--                            </form>--%>
-<%--                            <form action="EmployeeController" method="post" style="display:inline;">--%>
+<%--                            <form action="employee" method="post" style="display:inline;">--%>
 <%--                                <input type="hidden" name="id" value="<%= emp.getId() %>">--%>
 <%--                                <input type="hidden" name="action" value="delete">--%>
 <%--                                <button class="btn btn-danger btn-sm">Delete</button>--%>
