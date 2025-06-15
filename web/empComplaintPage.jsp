@@ -1,3 +1,5 @@
+<%@ page import="com.kp.model.Complaint" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if (session.getAttribute("email") == null) {
@@ -22,6 +24,10 @@
 <div class="container mt-1">
     <div class="d-flex justify-content-between align-items-center mb-2">
         <h2>Manage Complaints</h2>
+        <form action="employee" method="post">
+            <button type="submit" name="action" value="load" class="btn btn-primary">Load My Complaints</button>
+        </form>
+
     </div>
 
     <form id="employeeForm" action="employee" method="post" class="row g-3">
@@ -31,7 +37,7 @@
             <div class="card p-3 bg-body-tertiary rounded shadow">
                 <div class="mb-2">
                     <label for="id" class="form-label">ID</label>
-                    <input type="text" disabled class="form-control" id="id" name="id" placeholder="1">
+                    <input type="text" readonly class="form-control" id="id" name="id" placeholder="1">
                 </div>
 
                 <div class="mb-2">
@@ -61,7 +67,7 @@
                 <div class="d-flex flex-column gap-2">
 
                     <!-- Add -->
-                    <button type="submit"  name="action" value="add" class="btn btn-success">Add</button>
+                    <button type="submit" name="action" value="add" class="btn btn-success">Add</button>
 
                     <!-- Update -->
                     <button type="submit" name="action" value="update" class="btn btn-warning">Update</button>
@@ -80,48 +86,55 @@
             <div class="table-responsive">
                 <table class="table table-striped table-hover align-middle">
                     <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Status</th>
-                        <th>Remark</th>
-                        <th>Created_at</th>
-                        <th>Updated_at</th>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Remark</th>
+                            <th>Created_at</th>
+                            <th>Updated_at</th>
+                            <th>Action</th>
 
-                    </tr>
+                        </tr>
                     </thead>
                     <tbody>
 
-                    <%-- Assuming you passed List<Employee> from Servlet to JSP --%>
-<%--                    <%--%>
-<%--                        List<Employee> list = (List<Employee>) request.getAttribute("employees");--%>
-<%--                        if (list != null) {--%>
-<%--                            for (Employee emp : list) {--%>
-<%--                    %>--%>
-<%--                    <tr>--%>
-<%--                        <td><%= emp.getId() %></td>--%>
-<%--                        <td><%= emp.getName() %></td>--%>
-<%--                        <td><%= emp.getEmail() %></td>--%>
-<%--                        <td><%= emp.getAddress() %></td>--%>
-<%--                        <td>--%>
-<%--                            <form action="employee" method="post" style="display:inline;">--%>
-<%--                                <input type="hidden" name="id" value="<%= emp.getId() %>">--%>
-<%--                                <input type="hidden" name="action" value="edit">--%>
-<%--                                <button class="btn btn-warning btn-sm">Edit</button>--%>
-<%--                            </form>--%>
-<%--                            <form action="employee" method="post" style="display:inline;">--%>
-<%--                                <input type="hidden" name="id" value="<%= emp.getId() %>">--%>
-<%--                                <input type="hidden" name="action" value="delete">--%>
-<%--                                <button class="btn btn-danger btn-sm">Delete</button>--%>
-<%--                            </form>--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
-<%--                    <%--%>
-<%--                            }--%>
-<%--                        }--%>
-<%--                    %>--%>
-                    </tbody>
+                    <%
+                    List<Complaint> list = (List<Complaint>) session.getAttribute("complaintEmpList");
+                    %>
+
+                        <%
+                            if (list != null) {
+                                for (Complaint c : list) {
+
+                        %>
+                        <tr>
+                            <td><%= c.getId() %></td>
+                            <td><%= c.getTitle() %></td>
+                            <td><%= c.getDescription() %></td>
+                            <td><%= c.getStatus() %></td>
+                            <td><%= c.getRemark() %></td>
+                            <td><%= c.getCreatedAt() %></td>
+                            <td><%= c.getUpdatedAt() %></td>
+                            <td>
+                                <form action="employee" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="<%= c.getId() %>">
+                                    <input type="hidden" name="action" value="edit">
+                                    <button class="btn btn-warning btn-sm">Edit</button>
+                                </form>
+                                <form action="employee" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="<%= c.getId() %>">
+                                    <input type="hidden" name="action" value="delete">
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <%
+                                }
+                            }
+                        %>
+                        </tbody>
                 </table>
             </div>
         </div>

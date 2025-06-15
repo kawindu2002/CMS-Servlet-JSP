@@ -55,7 +55,7 @@
                 <%
                     } else if ("employee".equals(content)) {
                 %>
-                        <jsp:include page="employee.jsp" />
+                        <jsp:include page="empComplaintPage.jsp" />
                 <%
                     } else {
                 %>

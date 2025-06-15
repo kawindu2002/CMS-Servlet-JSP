@@ -10,7 +10,6 @@ CREATE TABLE users (
        password VARCHAR(255) NOT NULL
 );
 
-
 CREATE TABLE complaints (
         id INT PRIMARY KEY AUTO_INCREMENT,
         employee_id INT NOT NULL,
@@ -27,6 +26,4 @@ CREATE TRIGGER update_complaint_time
     BEFORE UPDATE ON complaints
     FOR EACH ROW
     SET NEW.updated_at = NOW();
-
-
 
