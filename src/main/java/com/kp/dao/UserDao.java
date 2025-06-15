@@ -1,60 +1,43 @@
 package com.kp.dao;
 
 import com.kp.model.User;
+import com.kp.util.CrudUtil;
 
 import java.sql.*;
 
 public class UserDao {
      
-     public User getUser(String email) {
-          User user = new User();
-          try{
-               Class.forName("com.mysql.cj.jdbc.Driver");
-               String url = "jdbc:mysql://localhost:3306/cms_ijse";
-               String sql = "select * from users where email=?";
-               Connection conn = DriverManager.getConnection(url,"root","Ijse@1234");
-               PreparedStatement stmt = conn.prepareStatement(sql);
-               stmt.setString(1,email);
-               ResultSet rs = stmt.executeQuery();
-               if(rs.next()){
-                    user.setId(rs.getInt("id"));
-                    user.setName(rs.getString("name"));
-                    user.setEmail(rs.getString("email"));
-                    user.setRole(rs.getString("role"));
-                    user.setPassword(rs.getString("password"));
-               }
-               
-          } catch (Exception e) {
-               System.out.println(e.getMessage());
-          }
-          return user;
+     public String getNextUserId() throws SQLException, ClassNotFoundException {
+          String query = "select id from users order by id desc limit 1";
+          return CrudUtil.getNextId(query,"U%03d","U001");
      }
      
-     public boolean saveUser(User user) {
-          boolean isSaved = false;
+     public User findByEmail(String email) throws SQLException, ClassNotFoundException {
+          ResultSet rst = CrudUtil.execute("select * from users where email=?", email);
           
-          try {
-               Class.forName("com.mysql.cj.jdbc.Driver");
-               String url = "jdbc:mysql://localhost:3306/cms_ijse";
-               Connection conn = DriverManager.getConnection(url, "root", "Ijse@1234");
-               
-               String sql = "INSERT INTO users (name, email, role, password) VALUES (?, ?, ?, ?)";
-               PreparedStatement stmt = conn.prepareStatement(sql);
-               stmt.setString(1, user.getName());
-               stmt.setString(2, user.getEmail());
-               stmt.setString(3, user.getRole());
-               stmt.setString(4, user.getPassword());
-               
-               int rows = stmt.executeUpdate();
-               isSaved = rows > 0;
-               
-               conn.close();
-               
-          } catch (Exception e) {
-               System.out.println("Error saving user: " + e.getMessage());
+          if (rst.next()) {
+               return new User(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4),
+                    rst.getString(5)
+               );
           }
-          return isSaved;
+          return null;
      }
      
+     public boolean saveUser(User user) throws SQLException, ClassNotFoundException {
+          return CrudUtil.execute(
+               "INSERT INTO users (id,name, email, role, password) VALUES (?, ?, ?, ?,?)",
+
+               user.getId(),
+               user.getName(),
+               user.getEmail(),
+               user.getRole(),
+               user.getPassword()
+          
+          );
+     }
 }
 

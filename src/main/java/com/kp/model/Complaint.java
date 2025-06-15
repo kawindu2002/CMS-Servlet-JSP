@@ -11,42 +11,12 @@ import lombok.Setter;
 @AllArgsConstructor
 
 public class Complaint {
-     private int id;
-     private int employee_id;
+     private String id;
+     private String employee_id;
      private String title;
      private String description;
      private String status;
      private String remark;
-     private String createdAt;
-     private String updatedAt;
      
-     public Complaint(int employeeId, String title, String description) {
-          this.employee_id = employeeId;
-          this.title = title;
-          this.description = description;
-     }
      
-     @Override
-     public String toString() {
-          return "Complaint{" +
-               "id=" + id +
-               ", employee_id=" + employee_id +
-               ", title='" + title + '\'' +
-               ", description='" + description + '\'' +
-               ", status='" + status + '\'' +
-               ", remark='" + remark + '\'' +
-               ", createdAt='" + createdAt + '\'' +
-               ", updatedAt='" + updatedAt + '\'' +
-               '}';
-     }
-     
-     public Complaint(int employee_id, String title, String description, String status, String remark, String createdAt, String updatedAt) {
-          this.employee_id = employee_id;
-          this.title = title;
-          this.description = description;
-          this.status = status;
-          this.remark = remark;
-          this.createdAt = createdAt;
-          this.updatedAt = updatedAt;
-     }
 }

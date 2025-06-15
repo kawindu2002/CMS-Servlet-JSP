@@ -7,7 +7,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -15,26 +14,31 @@ import java.io.IOException;
 public class SignUpServlet extends HttpServlet {
      @Override
      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+          UserDao dao = new UserDao();
+          
+          String id = null;
+          try {
+               id = dao.getNextUserId();
+          } catch (Exception e) {
+               throw new RuntimeException(e);
+          }
           String name = req.getParameter("name");
           String email = req.getParameter("email");
           String role = req.getParameter("role");
           String password = req.getParameter("password");
           
           UserDao userDao = new UserDao();
-          User users = userDao.getUser(email);
           
-          if (users.getEmail().equals(email)) {
-               System.out.println("This email is already in use");
-               resp.sendRedirect("signUpPage.jsp");
-               
-          }else{
-               User user = new User(name,email,role,password);
+          User user = new User(id,name,email,role,password);
+          try {
                if (userDao.saveUser(user)) {
                     resp.sendRedirect("signInPage.jsp?login=success");
                     
                }else{
                     resp.sendRedirect("signUpPage.jsp");
                }
+          } catch (Exception e) {
+               throw new RuntimeException(e);
           }
      }
 }

@@ -64,7 +64,7 @@
             <div class="card p-3 bg-body-tertiary rounded shadow">
                 <div class="mb-2">
                     <label for="id" class="form-label">ID</label>
-                    <input type="text" readonly class="form-control" id="id" name="id" placeholder="1">
+                    <input type="text" readonly class="form-control" id="id" name="id" value="<%= complaint.getId() %>">
                 </div>
 
                 <div class="mb-2">
@@ -119,8 +119,6 @@
                             <th>Description</th>
                             <th>Status</th>
                             <th>Remark</th>
-                            <th>Created_at</th>
-                            <th>Updated_at</th>
                             <th>Action</th>
 
                         </tr>
@@ -142,8 +140,6 @@
                             <td><%= c.getDescription() %></td>
                             <td><%= c.getStatus() %></td>
                             <td><%= c.getRemark() %></td>
-                            <td><%= c.getCreatedAt() %></td>
-                            <td><%= c.getUpdatedAt() %></td>
                             <td>
                                 <form action="employee" method="post" style="display:inline;">
                                     <input type="hidden" name="id" value="<%= c.getId() %>">

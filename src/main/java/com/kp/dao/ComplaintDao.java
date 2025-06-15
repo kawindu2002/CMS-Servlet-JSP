@@ -1,159 +1,84 @@
 package com.kp.dao;
 
 import com.kp.model.Complaint;
+import com.kp.model.User;
+import com.kp.util.CrudUtil;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ComplaintDao {
-     public List<Complaint> getAllComplaints() {
-          List<Complaint> complaints = new ArrayList<>();
+     
+     public ArrayList<Complaint> getAllComplaints() throws SQLException, ClassNotFoundException {
+          ResultSet rst = CrudUtil.execute("SELECT * FROM complaints");
           
-          try {
-               Class.forName("com.mysql.cj.jdbc.Driver");
-               String url = "jdbc:mysql://localhost:3306/cms_ijse";
-               Connection conn = DriverManager.getConnection(url, "root", "Ijse@1234");
-               
-               String sql = "SELECT * FROM complaints";
-               PreparedStatement stmt = conn.prepareStatement(sql);
-               ResultSet rs = stmt.executeQuery();
-               
-               while (rs.next()) {
-                    Complaint complaint = new Complaint();
-                         complaint.setId(rs.getInt("id"));
-                         complaint.setEmployee_id(rs.getInt("employee_id"));
-                         complaint.setTitle(rs.getString("title"));
-                         complaint.setDescription(rs.getString("description"));
-                         complaint.setStatus(rs.getString("status"));
-                         complaint.setRemark(rs.getString("admin_remark"));
-                         complaint.setCreatedAt(rs.getTimestamp("created_at").toString());
-                         complaint.setUpdatedAt(rs.getTimestamp("updated_at").toString());
+          ArrayList<Complaint> complaints = new ArrayList<>();
+          
+          while (rst.next()) {
+               Complaint complaint = new Complaint(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4),
+                    rst.getString(5),
+                    rst.getString(6)
                     
-                    complaints.add(complaint);
-               }
-               conn.close();
-          } catch (Exception e) {
-               System.out.println("Error fetching complaints: " + e.getMessage());
+               );
+               complaints.add(complaint);
+          }
+          return complaints;
+     }
+     
+     public ArrayList<Complaint> getComplaintOfEmpById(String id) throws SQLException, ClassNotFoundException {
+          ArrayList<Complaint> complaints = new ArrayList<>();
+          
+          ResultSet rst = CrudUtil.execute(
+               "SELECT c.id, c.employee_id, c.title, c.description, c.status, c.admin_remark " +
+                    "FROM complaints c " +
+                    "JOIN users u ON c.employee_id = u.id " +
+                    "WHERE u.id = ?", id);
+          
+          while (rst.next()) {
+               complaints.add(new Complaint(
+                    rst.getString("id"),
+                    rst.getString("employee_id"),
+                    rst.getString("title"),
+                    rst.getString("description"),
+                    rst.getString("status"),
+                    rst.getString("admin_remark")
+               ));
           }
           
           return complaints;
      }
      
-     
-     public  List<Complaint>  getComplaintOfEmpByEmail(String email) {
-          List<Complaint> complaints = new ArrayList<>();
-          
-          try {
-               Class.forName("com.mysql.cj.jdbc.Driver");
-               String url = "jdbc:mysql://localhost:3306/cms_ijse";
-               Connection conn = DriverManager.getConnection(url, "root", "Ijse@1234");
+     public boolean saveComplaint(Complaint complaint)  throws SQLException, ClassNotFoundException {
+          return CrudUtil.execute(
+               "INSERT INTO complaints (id,employee_id,title,description) VALUES (?, ?, ?,?)",
                
-               String sql = "SELECT c.* FROM complaints c JOIN users u ON c.employee_id = u.id WHERE u.email = ?";
-               PreparedStatement stmt = conn.prepareStatement(sql);
-               stmt.setString(1, email);
-               ResultSet rs = stmt.executeQuery();
-               
-               while (rs.next()) {
-                    Complaint complaint = new Complaint();
-                         complaint.setId(rs.getInt("id"));
-                         complaint.setEmployee_id(rs.getInt("employee_id"));
-                         complaint.setTitle(rs.getString("title"));
-                         complaint.setDescription(rs.getString("description"));
-                         complaint.setStatus(rs.getString("status"));
-                         complaint.setRemark(rs.getString("admin_remark"));
-                         complaint.setCreatedAt(rs.getTimestamp("created_at").toString());
-                         complaint.setUpdatedAt(rs.getTimestamp("updated_at").toString());
-                    
-                    complaints.add(complaint);
-               }
-               conn.close();
-          } catch (Exception e) {
-               System.out.println("Error fetching complaints: " + e.getMessage());
-          }
+               complaint.getId(),
+               complaint.getEmployee_id(),
+               complaint.getTitle(),
+               complaint.getDescription()
           
-          return complaints;
+          );
      }
      
-     public Boolean saveComplaint(Complaint complaint) {
-          boolean isSaved = false;
-          
-          try {
-               Class.forName("com.mysql.cj.jdbc.Driver");
-               String url = "jdbc:mysql://localhost:3306/cms_ijse";
-               Connection conn = DriverManager.getConnection(url, "root", "Ijse@1234");
-               
-               String sql = "INSERT INTO complaints (employee_id,title,description ) VALUES (?, ?, ?)";
-               PreparedStatement stmt = conn.prepareStatement(sql);
-                    stmt.setInt(1, complaint.getEmployee_id());
-                    stmt.setString(2, complaint.getTitle());
-                    stmt.setString(3, complaint.getDescription());
-                    
-               int rows = stmt.executeUpdate();
-               isSaved = rows > 0;
-               conn.close();
-               
-          } catch (Exception e) {
-               System.out.println("Error saving complaint: " + e.getMessage());
-          }
-          return isSaved;
+     public boolean updateComplaint(Complaint complaint) throws SQLException, ClassNotFoundException {
+          return CrudUtil.execute(
+               "UPDATE complaints SET title = ?, description = ?, status = ?, admin_remark = ? WHERE id = ?",
+               complaint.getTitle(),
+               complaint.getDescription(),
+               complaint.getStatus(),
+               complaint.getRemark(),
+               complaint.getId()
+          );
      }
      
-     public boolean updateComplaint(Complaint complaint) {
-          boolean isUpdated = false;
-          
-          try {
-               Class.forName("com.mysql.cj.jdbc.Driver");
-               String url = "jdbc:mysql://localhost:3306/cms_ijse";
-               Connection conn = DriverManager.getConnection(url, "root", "Ijse@1234");
-               
-               String sql = "UPDATE complaints SET title = ?, description = ?, status = ?, admin_remark = ? WHERE id = ?";
-               PreparedStatement stmt = conn.prepareStatement(sql);
-               
-                    stmt.setString(1, complaint.getTitle());
-                    stmt.setString(2, complaint.getDescription());
-                    stmt.setString(3, complaint.getStatus());
-                    stmt.setString(4, complaint.getRemark());
-                    stmt.setInt(5, complaint.getId());
-               
-               int rows = stmt.executeUpdate();
-               isUpdated = rows > 0;
-               
-               conn.close();
-               
-          } catch (Exception e) {
-               System.out.println("Error updating complaint: " + e.getMessage());
-          }
-          return isUpdated;
+     public boolean deleteComplaint(String id) throws SQLException, ClassNotFoundException {
+          return CrudUtil.execute("DELETE FROM complaints WHERE id = ?", id);
      }
      
-     
-     public boolean deleteComplaint(int id) {
-          boolean isDeleted = false;
-          
-          try {
-               Class.forName("com.mysql.cj.jdbc.Driver");
-               String url = "jdbc:mysql://localhost:3306/cms_ijse";
-               Connection conn = DriverManager.getConnection(url, "root", "Ijse@1234");
-               
-               String sql = "DELETE FROM complaints WHERE id = ?";
-               PreparedStatement stmt = conn.prepareStatement(sql);
-               
-               stmt.setInt(1, id);
-               
-               int rows = stmt.executeUpdate();
-               isDeleted = rows > 0;
-               
-               conn.close();
-               
-          } catch (Exception e) {
-               System.out.println("Error deleting complaint: " + e.getMessage());
-          }
-          return isDeleted;
-     }
      
 }
 

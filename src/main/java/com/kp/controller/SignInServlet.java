@@ -19,8 +19,13 @@ public class SignInServlet extends HttpServlet {
           String password = req.getParameter("password");
           
           UserDao userDao = new UserDao();
-          User user = userDao.getUser(email);
-
+          User user = null;
+          try {
+               user = userDao.findByEmail(email);
+          } catch (Exception e) {
+               throw new RuntimeException(e);
+          }
+          
           if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
                 HttpSession session = req.getSession();
                session.setAttribute("id", user.getId());
@@ -31,7 +36,7 @@ public class SignInServlet extends HttpServlet {
                
                if (user.getRole().equals("admin")) {
                     resp.sendRedirect("dashboard.jsp?page=adminView");
-               }else{
+               }else if (user.getRole().equals("employee")){
                     resp.sendRedirect("dashboard.jsp?page=employeeView");
                }
                
