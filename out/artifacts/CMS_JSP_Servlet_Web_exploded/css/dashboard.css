@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#board {
+    background-color: ghostwhite;
+}
+
+#sidebar, #board {
+    min-height: 650px;
+}
+
+#sidebar .nav-link {
+    color: white;
+    transition: 0.3s ease-in-out;
+    font-weight: bold;
+}
+
+#sidebar .nav-link.active {
+    color: #ffc107;
+}
+
+#sidebar .nav-link:not(.no-hover):hover {
+    background-color: #ffc107;
+    color: black;
+    border-radius: 10px;
+}

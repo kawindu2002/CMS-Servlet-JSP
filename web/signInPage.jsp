@@ -10,6 +10,12 @@
           integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 </head>
 
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setDateHeader("Expires", 0); // Proxies
+%>
+
 <body class="container">
 <div class="row justify-content-center align-items-center vh-100">
     <div class="col-md-6">
@@ -19,7 +25,7 @@
         <form action="signin" method="post">
             <div class="mb-3">
                 <label for="email" class="form-label">Your Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="example@example.com" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="user@mail.com" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Your Password</label>
@@ -36,7 +42,7 @@
 
 </div>
 
-<script src="../js/jquery-3.7.1.min.js"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
