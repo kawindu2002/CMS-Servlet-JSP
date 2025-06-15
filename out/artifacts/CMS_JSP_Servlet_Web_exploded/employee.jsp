@@ -33,14 +33,14 @@
 <div class="container mt-1">
     <div class="d-flex justify-content-between align-items-center mb-2">
         <h2>Manage Employees</h2>
-        <button class="btn btn-success" id="saveEmployeeBtn">Manage Complaints</button>
+        <button class="btn btn-success" id="saveEmployeeBtn">Add Employee</button>
     </div>
 
     <div class="row">
         <div class="col-9">
             <section class="form">
                 <div class="card p-3 mb-2 bg-body-tertiary rounded shadow">
-                    <form id="employeeForm" action="employee" method="post">
+                    <form id="employeeForm">
                         <div class="mb-2">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" placeholder="John">
@@ -86,7 +86,7 @@
     <!-- Employee Table -->
     <div class="card shadow-sm">
         <div class="card-body">
-            <h5 class="card-title">My Complaint List</h5>
+            <h5 class="card-title">Employee List</h5>
             <div class="table-responsive">
                 <table class="table table-striped table-hover align-middle">
                     <thead class="table-dark">

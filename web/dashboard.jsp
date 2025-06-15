@@ -33,19 +33,20 @@
                 </form>
             </div>
         </div>
+
         <div class="col-lg-10 col-sm-12" id="board">
             <div class="card bg-dark p-1 h-100">
                 <div class="card text-dark p-3 h-100" id="content">
 
                 <%--  ================================ --%>
                 <%
-                    String page = request.getParameter("page");
+                    String content = request.getParameter("page");
 
-                    if ("admin".equals(page)) {
+                    if ("admin".equals(content)) {
                 %>
                         <jsp:include page="admin.jsp" />
                 <%
-                    } else if ("employee".equals(page)) {
+                    } else if ("employee".equals(content)) {
                 %>
                         <jsp:include page="employee.jsp" />
                 <%

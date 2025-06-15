@@ -33,10 +33,32 @@
                 </form>
             </div>
         </div>
+
         <div class="col-lg-10 col-sm-12" id="board">
             <div class="card bg-dark p-1 h-100">
                 <div class="card text-dark p-3 h-100" id="content">
-                    <h2>Welcome to CMS</h2>
+
+                <%--  ================================ --%>
+                <%
+                    String content = request.getParameter("page");
+
+                    if ("admin".equals(content)) {
+                %>
+                        <jsp:include page="admin.jsp" />
+                <%
+                    } else if ("employee".equals(content)) {
+                %>
+                        <jsp:include page="employee.jsp" />
+                <%
+                    } else {
+                %>
+                        <h2>⚠️ Page not found or unauthorized.</h2>
+                <%
+                    }
+                %>
+
+                <%--  ================================ --%>
+
                 </div>
             </div>
         </div>
@@ -47,8 +69,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
-
-
 
 </body>
 </html>
