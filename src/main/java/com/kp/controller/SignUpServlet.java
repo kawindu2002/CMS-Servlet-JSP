@@ -20,14 +20,21 @@ public class SignUpServlet extends HttpServlet {
           String role = req.getParameter("role");
           String password = req.getParameter("password");
           
-          User user = new User(name,email,role,password);
           UserDao userDao = new UserDao();
+          User users = userDao.getUser(email);
           
-          if (userDao.saveUser(user)) {
-               resp.sendRedirect("signInPage.jsp");
+          if (users.getEmail().equals(email)) {
+               System.out.println("This email is already in use");
+               resp.sendRedirect("signUpPage.jsp");
                
           }else{
-               resp.sendRedirect("signUpPage.jsp");
+               User user = new User(name,email,role,password);
+               if (userDao.saveUser(user)) {
+                    resp.sendRedirect("signInPage.jsp");
+                    
+               }else{
+                    resp.sendRedirect("signUpPage.jsp");
+               }
           }
      }
 }
