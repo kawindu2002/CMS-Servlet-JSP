@@ -20,6 +20,12 @@ public class Complaint {
      private String createdAt;
      private String updatedAt;
      
+     public Complaint(int employeeId, String title, String description) {
+          this.employee_id = employeeId;
+          this.title = title;
+          this.description = description;
+     }
+     
      @Override
      public String toString() {
           return "Complaint{" +

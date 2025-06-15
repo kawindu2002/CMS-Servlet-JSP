@@ -23,6 +23,7 @@ public class SignInServlet extends HttpServlet {
 
           if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
                 HttpSession session = req.getSession();
+               session.setAttribute("id", user.getId());
                session.setAttribute("name", user.getName());
                session.setAttribute("email", user.getEmail());
                session.setAttribute("role", user.getRole());

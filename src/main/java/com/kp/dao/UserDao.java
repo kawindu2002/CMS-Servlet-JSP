@@ -2,12 +2,10 @@ package com.kp.dao;
 
 import com.kp.model.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class UserDao {
+     
      public User getUser(String email) {
           User user = new User();
           try{

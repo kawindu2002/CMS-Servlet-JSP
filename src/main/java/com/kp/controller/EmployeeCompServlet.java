@@ -28,7 +28,8 @@ public class EmployeeCompServlet extends HttpServlet {
           }else if ("add".equals(action)) {
                RequestDispatcher rd = req.getRequestDispatcher("dashboard.jsp?page=employeeSave");
                rd.forward(req, resp);
-//               saveEmployeeComData(req, resp);
+          }else if ("save".equals(action)) {
+               saveEmployeeComData(req, resp);
           }else if ("update".equals(action)) {
                updateEmployeeComData(req, resp);
           }else if ("delete".equals(action)) {
@@ -51,7 +52,7 @@ public class EmployeeCompServlet extends HttpServlet {
           HttpSession session = req.getSession();
           session.setAttribute("complaintEmpList", list);
           
-          resp.sendRedirect("dashboard.jsp?page=employeeView"); // 🔥 Use redirect, not forward
+          resp.sendRedirect("dashboard.jsp?page=employeeView");
      }
      
      
@@ -61,18 +62,14 @@ public class EmployeeCompServlet extends HttpServlet {
                int employee_id = (int) session.getAttribute("employee_id");
                String title = req.getParameter("title");
                String description = req.getParameter("description");
-               String status = req.getParameter("status");
-               String admin_remark = req.getParameter("admin_remark");
-               String created_at = req.getParameter("created_at");
-               String updated_at = req.getParameter("updated_at");
                
           ComplaintDao complaintDao = new ComplaintDao();
-          Complaint complaint = new Complaint(employee_id,title,description,status,admin_remark,created_at,updated_at);
+          Complaint complaint = new Complaint(employee_id,title,description);
           if (complaintDao.saveComplaint(complaint)) {
-               resp.sendRedirect("dashboard.jsp?page=employeeView");
-               
+               resp.sendRedirect("dashboard.jsp?page=employeeView&success=save_ok");
           }else{
-               resp.sendRedirect("dashboard.jsp?page=employeeView");
+               resp.sendRedirect("dashboard.jsp?page=employeeView&success=save_failed");
+               
           }
           
      }
@@ -97,7 +94,8 @@ public class EmployeeCompServlet extends HttpServlet {
                complaint.setRemark(admin_remark);
                
           if (complaintDao.updateComplaint(complaint)) {
-               resp.sendRedirect("dashboard.jsp?page=employeeView");
+               resp.sendRedirect("dashboard.jsp?page=employeeView&success=update_ok");
+               
           } else {
                resp.sendRedirect("dashboard.jsp?page=employee&error=update_failed");
           }
@@ -108,7 +106,8 @@ public class EmployeeCompServlet extends HttpServlet {
           ComplaintDao complaintDao = new ComplaintDao();
           HttpSession session = req.getSession();
           if (complaintDao.deleteComplaint(id)) {
-               resp.sendRedirect("dashboard.jsp?page=employeeView");
+               resp.sendRedirect("dashboard.jsp?page=employeeView&success=delete_ok");
+               
           } else {
                resp.sendRedirect("dashboard.jsp?page=employee&error=delete_failed");
           }

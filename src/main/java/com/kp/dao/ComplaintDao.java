@@ -86,17 +86,14 @@ public class ComplaintDao {
                String url = "jdbc:mysql://localhost:3306/cms_ijse";
                Connection conn = DriverManager.getConnection(url, "root", "Ijse@1234");
                
-               String sql = "INSERT INTO complaints (employee_id, title, description, status, admin_remark ) VALUES (?, ?, ?, ?,?)";
+               String sql = "INSERT INTO complaints (employee_id,title,description ) VALUES (?, ?, ?)";
                PreparedStatement stmt = conn.prepareStatement(sql);
                     stmt.setInt(1, complaint.getEmployee_id());
                     stmt.setString(2, complaint.getTitle());
                     stmt.setString(3, complaint.getDescription());
-                    stmt.setString(4, complaint.getStatus());
-                    stmt.setString(5, complaint.getRemark());
                     
                int rows = stmt.executeUpdate();
                isSaved = rows > 0;
-               
                conn.close();
                
           } catch (Exception e) {

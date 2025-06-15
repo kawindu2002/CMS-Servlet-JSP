@@ -6,6 +6,32 @@
     }
 %>
 
+<%
+    if (session.getAttribute("role").equals("employee")) {
+        response.sendRedirect("signInPage.jsp");
+        return;
+    }
+%>
+
+<%
+    String success = request.getParameter("success");
+    String error = request.getParameter("error");
+%>
+
+<% if ("save_ok".equals(success)) { %>
+        <div class="alert alert-success">✅ Complaint saved successfully!</div>
+<% } else if ("update_ok".equals(success)) { %>
+        <div class="alert alert-success">🔄 Complaint updated successfully!</div>
+<% } else if ("delete_ok".equals(success)) { %>
+        <div class="alert alert-success">🗑️ Complaint deleted successfully!</div>
+<% } else if ("update_failed".equals(error)) { %>
+        <div class="alert alert-danger">❌ Update failed. Please try again!</div>
+<% } else if ("save_failed".equals(error)) { %>
+        <div class="alert alert-danger">❌ Save failed. Please try again!</div>
+<% } else if ("delete_failed".equals(error)) { %>
+        <div class="alert alert-danger">❌ Delete failed. Try again!</div>
+<% } %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

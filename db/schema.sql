@@ -16,7 +16,7 @@ CREATE TABLE complaints (
         title VARCHAR(100) NOT NULL,
         description TEXT NOT NULL,
         status VARCHAR(20) NOT NULL DEFAULT 'pending',
-        admin_remark TEXT,
+        admin_remark VARCHAR(255) DEFAULT 'not added',
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (employee_id) REFERENCES users(id)
