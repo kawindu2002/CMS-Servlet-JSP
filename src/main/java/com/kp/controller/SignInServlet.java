@@ -29,9 +29,9 @@ public class SignInServlet extends HttpServlet {
                session.setAttribute("password", user.getPassword());
                
                if (user.getRole().equals("admin")) {
-                    resp.sendRedirect("dashboard.jsp?page=admin");
+                    resp.sendRedirect("dashboard.jsp?page=adminView");
                }else{
-                    resp.sendRedirect("dashboard.jsp?page=employee");
+                    resp.sendRedirect("dashboard.jsp?page=employeeView");
                }
                
           }else{

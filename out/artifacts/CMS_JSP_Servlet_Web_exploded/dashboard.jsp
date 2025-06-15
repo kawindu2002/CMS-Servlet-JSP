@@ -45,26 +45,28 @@
             <div class="card bg-dark p-1 h-100">
                 <div class="card text-dark p-3 h-100" id="content">
 
-                <%--  ================================ --%>
                 <%
                     String content = request.getParameter("page");
 
-                    if ("admin".equals(content)) {
+                    if ("adminView".equals(content)) {
                 %>
-                        <jsp:include page="admin.jsp" />
+                        <jsp:include page="adminComplaintPage.jsp" />
                 <%
-                    } else if ("employee".equals(content)) {
+                    } else if ("employeeView".equals(content)) {
                 %>
                         <jsp:include page="empComplaintPage.jsp" />
                 <%
-                    } else {
+                    } else if ("employeeSave".equals(content)) {
+                %>
+                        <jsp:include page="empSaveComplaint.jsp" />
+                <%
+                    }else{
                 %>
                         <h2>⚠️ Page not found or unauthorized.</h2>
                 <%
                     }
                 %>
 
-                <%--  ================================ --%>
 
                 </div>
             </div>

@@ -8,6 +8,14 @@
     }
 %>
 
+<%
+    if (session.getAttribute("role").equals("admin")) {
+        response.sendRedirect("signInPage.jsp");
+        return;
+    }
+%>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
