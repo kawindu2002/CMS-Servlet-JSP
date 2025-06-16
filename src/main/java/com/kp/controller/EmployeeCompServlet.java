@@ -20,6 +20,7 @@ public class EmployeeCompServlet extends HttpServlet {
      @Override
      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
           String action = req.getParameter("action");
+          
           if ("load".equals(action)) {
                try {
                     loadEmployeeComTable(req, resp);
@@ -31,10 +32,20 @@ public class EmployeeCompServlet extends HttpServlet {
                rd.forward(req, resp);
           }else if ("save".equals(action)) {
                saveEmployeeComData(req, resp);
-          }else if ("update".equals(action)) {
+          }else if ("edit".equals(action)) {
+               try {
+                    editEmployeeComData(req, resp);
+               } catch (Exception e) {
+                    throw new RuntimeException(e);
+               }
+          } else if ("update".equals(action)) {
                updateEmployeeComData(req, resp);
           }else if ("delete".equals(action)) {
-               deleteEmployeeComData(req, resp);
+               try {
+                    deleteEmployeeComData(req, resp);
+               } catch (Exception e) {
+                    throw new RuntimeException(e);
+               }
           }else {
                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
           }
@@ -96,16 +107,32 @@ public class EmployeeCompServlet extends HttpServlet {
 //          }
      }
      
-     private void deleteEmployeeComData(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//          int id = Integer.parseInt(req.getParameter("id")); //
-//          ComplaintDao complaintDao = new ComplaintDao();
-//          HttpSession session = req.getSession();
-//          if (complaintDao.deleteComplaint(id)) {
-//               resp.sendRedirect("dashboard.jsp?page=employeeView&success=delete_ok");
-//
-//          } else {
-//               resp.sendRedirect("dashboard.jsp?page=employee&error=delete_failed");
-//          }
+     private void deleteEmployeeComData(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ClassNotFoundException {
+          String id = req.getParameter("id");
+          ComplaintDao complaintDao = new ComplaintDao();
+          if (complaintDao.deleteComplaint(id)) {
+               resp.sendRedirect("dashboard.jsp?page=employeeView&success=delete_ok");
+
+          } else {
+               resp.sendRedirect("dashboard.jsp?page=employeeView&error=delete_failed");
+          }
+     }
+     
+     private void editEmployeeComData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
+          
+          String id = request.getParameter("id");
+          ComplaintDao complaintDao = new ComplaintDao();
+          HttpSession session = request.getSession();
+          
+          Complaint selectedComplaint = complaintDao.getComplaintByComId(id);
+          request.setAttribute("selectedComplaint", selectedComplaint);
+          
+          String userId = (String) session.getAttribute("id");
+          List<Complaint> complaintList = complaintDao.getComplaintOfEmpById(userId);
+          session.setAttribute("complaintEmpList", complaintList);
+          
+          request.getRequestDispatcher("dashboard.jsp?page=employeeView").forward(request, response);
+          
      }
      
 }

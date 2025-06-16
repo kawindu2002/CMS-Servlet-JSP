@@ -57,34 +57,28 @@
 
     </div>
 
+    <%
+        Complaint selected = (Complaint) request.getAttribute("selectedComplaint");
+    %>
+
     <form id="employeeForm" action="employee" method="post" class="row g-3">
         <input type="hidden" name="_method" id="formMethod" value="put">
 
         <div class="col-lg-9 col-sm-12">
             <div class="card p-3 bg-body-tertiary rounded shadow">
-                <div class="mb-2">
-                    <label for="id" class="form-label">ID</label>
-                    <input type="text" readonly class="form-control" id="id" name="id" value="<%= complaint.getId() %>">
-                </div>
 
                 <div class="mb-2">
                     <label for="title" class="form-label">Title</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Broken Chair">
+                    <input type="text" class="form-control" id="title" name="title"
+                           placeholder="Broken Chair"
+                           value="<%= selected != null ? selected.getTitle() : "" %>">
                 </div>
 
                 <div class="mb-2">
                     <label for="description" class="form-label">Description</label>
                     <input type="text" class="form-control" id="description" name="description"
-                           placeholder="My office chair wheel is broken">
-                </div>
-
-                <div class="mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <select class="form-select" id="status" name="status">
-                        <option value="Pending">Pending</option>
-                        <option value="Resolved">Resolved</option>
-                        <option value="In Progress">In Progress</option>
-                    </select>
+                           placeholder="My office chair wheel is broken"
+                           value="<%= selected != null ? selected.getDescription() : "" %>">
                 </div>
             </div>
         </div>
@@ -107,7 +101,7 @@
     </form>
 
     <!-- Employee Table -->
-    <div class="card shadow-sm">
+    <div class="card shadow-sm mt-3">
         <div class="card-body">
             <h5 class="card-title">My Complaint List</h5>
             <div class="table-responsive">

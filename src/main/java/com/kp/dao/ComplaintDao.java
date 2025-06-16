@@ -52,6 +52,25 @@ public class ComplaintDao {
           return complaints;
      }
      
+     public Complaint getComplaintByComId(String id) throws SQLException, ClassNotFoundException {
+          ResultSet rst = CrudUtil.execute("SELECT * FROM complaints WHERE id = ?", id);
+          
+          if (rst.next()) {
+               return new Complaint(
+                    rst.getString("id"),
+                    rst.getString("employee_id"),
+                    rst.getString("title"),
+                    rst.getString("description"),
+                    rst.getString("status"),
+                    rst.getString("admin_remark")
+               );
+          }
+          
+          // If no complaint is found, return null
+          return null;
+     }
+     
+     
      public boolean saveComplaint(Complaint complaint)  throws SQLException, ClassNotFoundException {
           return CrudUtil.execute(
                "INSERT INTO complaints (id,employee_id,title,description) VALUES (?, ?, ?,?)",
