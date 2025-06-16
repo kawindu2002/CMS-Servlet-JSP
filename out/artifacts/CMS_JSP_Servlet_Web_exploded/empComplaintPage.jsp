@@ -88,13 +88,14 @@
                 <div class="d-flex flex-column gap-2">
 
                     <!-- Add -->
-                    <button type="submit" name="action" value="add" class="btn btn-success">Add</button>
+                    <button type="submit" name="action" value="add" class="btn btn-success">New</button>
 
                     <!-- Update -->
                     <button type="submit" name="action" value="update" class="btn btn-warning">Update</button>
 
                     <!-- Reset -->
-                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="submit" name="action" value="clearForm" class="btn btn-secondary">Clear</button>
+
                 </div>
             </div>
         </div>
@@ -120,7 +121,7 @@
                     <tbody>
 
                     <%
-                    List<Complaint> list = (List<Complaint>) session.getAttribute("complaintEmpList");
+                        List<Complaint> list = (List<Complaint>) session.getAttribute("complaintEmpList");
                     %>
 
                         <%

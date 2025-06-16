@@ -9,6 +9,12 @@ import java.util.ArrayList;
 
 public class ComplaintDao {
      
+     public String getNextComplaintId() throws SQLException, ClassNotFoundException {
+          String query = "select id from complaints order by id desc limit 1";
+          return CrudUtil.getNextId(query,"C%03d","C001");
+     }
+     
+     
      public ArrayList<Complaint> getAllComplaints() throws SQLException, ClassNotFoundException {
           ResultSet rst = CrudUtil.execute("SELECT * FROM complaints");
           
@@ -83,7 +89,16 @@ public class ComplaintDao {
           );
      }
      
-     public boolean updateComplaint(Complaint complaint) throws SQLException, ClassNotFoundException {
+     public boolean updateComplaintForEmp(Complaint complaint) throws SQLException, ClassNotFoundException {
+          return CrudUtil.execute(
+               "UPDATE complaints SET title = ?, description = ? WHERE id = ?",
+               complaint.getTitle(),
+               complaint.getDescription(),
+               complaint.getId()
+          );
+     }
+     
+     public boolean updateComplaintForAdmin(Complaint complaint) throws SQLException, ClassNotFoundException {
           return CrudUtil.execute(
                "UPDATE complaints SET title = ?, description = ?, status = ?, admin_remark = ? WHERE id = ?",
                complaint.getTitle(),
