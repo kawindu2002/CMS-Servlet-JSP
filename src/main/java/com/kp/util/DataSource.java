@@ -12,6 +12,7 @@ import java.sql.SQLException;
 
 @WebListener
 public class DataSource implements ServletContextListener {
+     
      @Override
      public void contextInitialized(ServletContextEvent sce) {
           BasicDataSource ds = new BasicDataSource();
@@ -22,18 +23,21 @@ public class DataSource implements ServletContextListener {
           ds.setInitialSize(5);
           ds.setMaxTotal(5);
           
+          // Save pool in ServletContext (optional, useful if other classes want it)
           ServletContext sc = sce.getServletContext();
           sc.setAttribute("ds", ds);
      }
+     
      @Override
      public void contextDestroyed(ServletContextEvent sce) {
           try {
                ServletContext sc = sce.getServletContext();
                BasicDataSource ds = (BasicDataSource) sc.getAttribute("ds");
-               ds.close();
+               if (ds != null) {
+                    ds.close();
+               }
           } catch (SQLException e) {
                throw new RuntimeException(e);
           }
-          
      }
 }

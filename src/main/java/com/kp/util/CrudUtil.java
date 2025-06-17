@@ -2,6 +2,7 @@ package com.kp.util;
 
 import java.sql.*;
 
+
 public class CrudUtil {
      public static <T> T execute(String sql, Object... obj) throws SQLException, ClassNotFoundException {
           Class.forName("com.mysql.cj.jdbc.Driver");
@@ -38,5 +39,3 @@ public class CrudUtil {
           return defaultPattern;
      }
 }
-
-
