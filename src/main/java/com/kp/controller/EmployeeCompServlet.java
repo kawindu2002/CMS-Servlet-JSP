@@ -74,8 +74,6 @@ public class EmployeeCompServlet extends HttpServlet {
           List<Complaint> list = dao.getComplaintOfEmpById(id);
           session.setAttribute("complaintEmpList", list);
           
-          clearEmployeeComData(req,resp);
-          
           resp.sendRedirect("dashboard.jsp?page=employeeView");
      }
      
@@ -87,9 +85,11 @@ public class EmployeeCompServlet extends HttpServlet {
           String employee_id = (String) session.getAttribute("userId");
           String title = req.getParameter("title");
           String description = req.getParameter("description");
-
+          
           if (!id.isEmpty() && !title.isEmpty() && !description.isEmpty()) {
-               Complaint complaint = new Complaint(id,employee_id,title,description);
+               Complaint complaint = new Complaint(id, employee_id, title, description);
+               complaint.setStatus("pending");
+               
                if (complaintDao.saveComplaint(complaint)) {
                     resp.sendRedirect("dashboard.jsp?page=employeeView&success=save_ok");
                }else{
@@ -98,7 +98,6 @@ public class EmployeeCompServlet extends HttpServlet {
           }else{
                resp.sendRedirect("dashboard.jsp?page=employeeSave&success=save_failed");
           }
-
      }
      
      private void updateEmployeeComData(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ClassNotFoundException {
@@ -155,15 +154,8 @@ public class EmployeeCompServlet extends HttpServlet {
 
      
      private void clearEmployeeComData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
-          ComplaintDao complaintDao = new ComplaintDao();
-          
           request.getSession().setAttribute("selectedComplaint", null);
-          
-          String userId = (String) request.getSession().getAttribute("userId");
-          List<Complaint> complaints = complaintDao.getComplaintOfEmpById(userId);
-          request.getSession().setAttribute("complaintEmpList", complaints);
-          
-          request.getRequestDispatcher("dashboard.jsp?page=employeeView").forward(request, response);
+          response.sendRedirect("dashboard.jsp?page=employeeView");
      }
      
 }

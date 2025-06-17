@@ -2,6 +2,11 @@
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+
     if (session.getAttribute("email") == null) {
         response.sendRedirect("signInPage.jsp");
         return;
@@ -62,7 +67,8 @@
     %>
 
     <form id="employeeForm" action="employee" method="post" class="row g-3">
-        <input type="hidden" name="_method" id="formMethod" value="put">
+<%--        <input type="hidden" name="action" value="update" />--%>
+
         <% if (selected != null) { %>
             <input type="hidden" name="id" value="<%= selected.getId() %>">
         <% } %>
@@ -102,7 +108,7 @@
                     </button>
 
                     <!-- Reset -->
-                    <button type="submit" name="action" value="clearForm" class="btn btn-secondary">Clear</button>
+                    <button type="submit" name="action" value="clearForm" class="btn btn-secondary" <%= (selected == null) ? "disabled" : "" %>>Clear</button>
 
                 </div>
             </div>
@@ -113,7 +119,7 @@
     <div class="card shadow-sm mt-3">
         <div class="card-body">
             <h5 class="card-title">My Complaint List</h5>
-            <div class="table-responsive">
+            <div class="table-responsive mt-3">
                 <table class="table table-striped table-hover align-middle">
                     <thead class="table-dark">
                         <tr>
@@ -127,7 +133,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    
+
                     <%
                         List<Complaint> list = (List<Complaint>) request.getSession().getAttribute("complaintEmpList");
                     %>
@@ -141,7 +147,9 @@
                     <tr>
                         <td><%= c.getId() %></td>
                         <td><%= c.getTitle() %></td>
+                        <td><%= c.getDescription() %></td>
                         <td><%= c.getStatus() %></td>
+                        <td><%= c.getRemark() %></td>
                         <td>
                             <% if (!"resolved".equalsIgnoreCase(c.getStatus())) { %>
                             <!-- Show Edit button -->
@@ -183,3 +191,4 @@
 
 </body>
 </html>
+

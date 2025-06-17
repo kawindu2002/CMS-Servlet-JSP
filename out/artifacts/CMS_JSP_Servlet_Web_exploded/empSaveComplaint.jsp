@@ -2,6 +2,11 @@
 <%@ page import="java.util.*" %>
 
 <%
+
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+
     if (session.getAttribute("email") == null) {
         response.sendRedirect("signInPage.jsp");
         return;
@@ -31,7 +36,6 @@
     </div>
 
     <form action="employee" method="post" class="row g-4">
-        <input type="hidden" name="_method" value="put">
 
         <!-- Title -->
         <div class="col-12">
@@ -55,3 +59,4 @@
 </div>
 </body>
 </html>
+

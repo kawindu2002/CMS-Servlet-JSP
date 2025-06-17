@@ -25,11 +25,12 @@ public class Complaint {
           this.description = description;
      }
      
-     public Complaint(String id, String employeeId, String title, String description) {
+     public Complaint(String id, String employee_id, String title, String description) {
           this.id = id;
-          this.employee_id = employeeId;
+          this.employee_id = employee_id;
           this.title = title;
           this.description = description;
+          this.status = "pending";
      }
      
      

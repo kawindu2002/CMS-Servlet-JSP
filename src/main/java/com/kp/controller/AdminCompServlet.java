@@ -2,8 +2,7 @@ package com.kp.controller;
 
 import com.kp.dao.ComplaintDao;
 import com.kp.model.Complaint;
-import com.kp.util.CrudUtil;
-import jakarta.servlet.RequestDispatcher;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -63,9 +62,7 @@ public class AdminCompServlet extends HttpServlet {
           ComplaintDao dao = new ComplaintDao();
           List<Complaint> list = dao.getAllComplaints();
           session.setAttribute("complaintAdminList", list);
-
-          clearAdminComData(req,resp);
-
+          
           resp.sendRedirect("dashboard.jsp?page=adminView");
      }
 
@@ -85,7 +82,6 @@ public class AdminCompServlet extends HttpServlet {
           if (remark == null || remark.trim().isEmpty()) {
                remark = "add remark";  // default remark
           }
-          
 
           if (status != null && !status.isEmpty() && remark != null && !remark.isEmpty()) {
               ComplaintDao complaintDao = new ComplaintDao();
@@ -98,7 +94,6 @@ public class AdminCompServlet extends HttpServlet {
               }
               
           } else {
-              System.out.println("💥 Status or Remark is missing!");
               resp.sendRedirect("dashboard.jsp?page=adminView&error=update_failed");
           }
      }
@@ -132,15 +127,9 @@ public class AdminCompServlet extends HttpServlet {
 
 
      private void clearAdminComData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
-          
-          ComplaintDao complaintDao = new ComplaintDao();
-
           request.getSession().setAttribute("selectedComplaint", null);
-
-          List<Complaint> complaintList = complaintDao.getAllComplaints();
-          request.getSession().setAttribute("complaintAdminList", complaintList);
-
-          request.getRequestDispatcher("dashboard.jsp?page=adminView").forward(request, response);
+          response.sendRedirect("dashboard.jsp?page=adminView");
+          
      }
 
 }

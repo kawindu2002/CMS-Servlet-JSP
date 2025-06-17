@@ -2,6 +2,11 @@
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+
     if (session.getAttribute("email") == null) {
         response.sendRedirect("signInPage.jsp");
         return;
@@ -58,7 +63,7 @@
         Complaint selected = (Complaint) request.getSession().getAttribute("selectedComplaint");
     %>
     <form id="adminForm" action="admin" method="post" class="row g-3">
-        <input type="hidden" name="action" value="update" />
+<%--        <input type="hidden" name="action" value="update" />--%>
         <% if (selected != null) { %>
         <input type="hidden" name="id" value="<%= selected.getId() %>">
         <% } %>
@@ -94,7 +99,7 @@
                     </button>
 
                     <!-- Clear -->
-                    <button type="submit" name="action" value="clearForm" class="btn btn-secondary">
+                    <button type="submit" name="action" value="clearForm" class="btn btn-secondary" <%= (selected == null) ? "disabled" : "" %>>
                         Clear
                     </button>
 
@@ -107,7 +112,7 @@
     <div class="card shadow-sm mt-3">
         <div class="card-body">
             <h5 class="card-title">Complaint List</h5>
-            <div class="table-responsive">
+            <div class="table-responsive mt-3">
                 <table class="table table-striped table-hover align-middle">
                     <thead class="table-dark">
                     <tr>

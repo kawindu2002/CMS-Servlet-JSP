@@ -37,6 +37,7 @@
                 <form action="signout">
                     <button type="submit" class="btn btn-outline-danger w-100" id="logout-btn">Logout</button>
                 </form>
+                <h6 class="mt-4 text-white shadow">Developed by KP</h6>
             </div>
         </div>
 
