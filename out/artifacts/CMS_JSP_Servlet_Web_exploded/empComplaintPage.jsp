@@ -58,11 +58,14 @@
     </div>
 
     <%
-        Complaint selected = (Complaint) request.getAttribute("selectedComplaint");
+        Complaint selected = (Complaint) request.getSession().getAttribute("selectedComplaint");
     %>
 
     <form id="employeeForm" action="employee" method="post" class="row g-3">
         <input type="hidden" name="_method" id="formMethod" value="put">
+        <% if (selected != null) { %>
+            <input type="hidden" name="id" value="<%= selected.getId() %>">
+        <% } %>
 
         <div class="col-lg-9 col-sm-12">
             <div class="card p-3 bg-body-tertiary rounded shadow">
@@ -91,7 +94,12 @@
                     <button type="submit" name="action" value="add" class="btn btn-success">New</button>
 
                     <!-- Update -->
-                    <button type="submit" name="action" value="update" class="btn btn-warning">Update</button>
+                    <button type="submit" name="action" value="update"
+                            class="btn btn-warning"
+                            <%= (selected == null) ? "disabled" : "" %>
+                    >
+                        Update
+                    </button>
 
                     <!-- Reset -->
                     <button type="submit" name="action" value="clearForm" class="btn btn-secondary">Clear</button>
@@ -121,7 +129,7 @@
                     <tbody>
 
                     <%
-                        List<Complaint> list = (List<Complaint>) session.getAttribute("complaintEmpList");
+                        List<Complaint> list = (List<Complaint>) request.getSession().getAttribute("complaintEmpList");
                     %>
 
                         <%
