@@ -9,7 +9,7 @@
 <%--%>--%>
 
 <%--<%--%>
-<%--    if (session.getAttribute("role").equals("employee")) {--%>
+<%--    if (session.getAttribute("role").equals("admin")) {--%>
 <%--        response.sendRedirect("signInPage.jsp");--%>
 <%--        return;--%>
 <%--    }--%>
@@ -21,24 +21,24 @@
 <%--%>--%>
 
 <%--<% if ("save_ok".equals(success)) { %>--%>
-<%--        <div class="alert alert-success">✅ Complaint saved successfully!</div>--%>
+<%--<div class="alert alert-success">✅ Complaint saved successfully!</div>--%>
 <%--<% } else if ("update_ok".equals(success)) { %>--%>
-<%--        <div class="alert alert-success">🔄 Complaint updated successfully!</div>--%>
+<%--<div class="alert alert-success">🔄 Complaint updated successfully!</div>--%>
 <%--<% } else if ("delete_ok".equals(success)) { %>--%>
-<%--        <div class="alert alert-success">🗑️ Complaint deleted successfully!</div>--%>
+<%--<div class="alert alert-success">🗑️ Complaint deleted successfully!</div>--%>
 <%--<% } else if ("update_failed".equals(error)) { %>--%>
-<%--        <div class="alert alert-danger">❌ Update failed. Please try again!</div>--%>
+<%--<div class="alert alert-danger">❌ Update failed. Please try again!</div>--%>
 <%--<% } else if ("save_failed".equals(error)) { %>--%>
-<%--        <div class="alert alert-danger">❌ Save failed. Please try again!</div>--%>
+<%--<div class="alert alert-danger">❌ Save failed. Please try again!</div>--%>
 <%--<% } else if ("delete_failed".equals(error)) { %>--%>
-<%--        <div class="alert alert-danger">❌ Delete failed. Try again!</div>--%>
+<%--<div class="alert alert-danger">❌ Delete failed. Try again!</div>--%>
 <%--<% } %>--%>
 
 
 <%--<!DOCTYPE html>--%>
 <%--<html lang="en">--%>
 <%--<head>--%>
-<%--    <title>Admin</title>--%>
+<%--    <title>Employee</title>--%>
 <%--    <meta charset="UTF-8">--%>
 <%--    <meta name="viewport" content="width=device-width, initial-scale=1.0">--%>
 
@@ -50,19 +50,22 @@
 
 <%--<div class="container mt-1">--%>
 <%--    <div class="d-flex justify-content-between align-items-center mb-2">--%>
-<%--        <h2>Check Complaints</h2>--%>
-<%--        <form action="admin" method="post">--%>
+<%--        <h2>Manage Complaints</h2>--%>
+<%--        <form action="employee" method="post">--%>
 <%--            <button type="submit" name="action" value="load" class="btn btn-primary">Load My Complaints</button>--%>
 <%--        </form>--%>
 
 <%--    </div>--%>
 
 <%--    <%--%>
-<%--        Complaint selected = (Complaint) request.getAttribute("selectedComplaint");--%>
+<%--        Complaint selected = (Complaint) request.getSession().getAttribute("selectedComplaint");--%>
 <%--    %>--%>
 
-<%--    <form id="adminForm" action="admin" method="post" class="row g-3">--%>
+<%--    <form id="employeeForm" action="employee" method="post" class="row g-3">--%>
 <%--        <input type="hidden" name="_method" id="formMethod" value="put">--%>
+<%--        <% if (selected != null) { %>--%>
+<%--        <input type="hidden" name="id" value="<%= selected.getId() %>">--%>
+<%--        <% } %>--%>
 
 <%--        <div class="col-lg-9 col-sm-12">--%>
 <%--            <div class="card p-3 bg-body-tertiary rounded shadow">--%>
@@ -91,7 +94,12 @@
 <%--                    <button type="submit" name="action" value="add" class="btn btn-success">New</button>--%>
 
 <%--                    <!-- Update -->--%>
-<%--                    <button type="submit" name="action" value="update" class="btn btn-warning">Update</button>--%>
+<%--                    <button type="submit" name="action" value="update"--%>
+<%--                            class="btn btn-warning"--%>
+<%--                            <%= (selected == null) ? "disabled" : "" %>--%>
+<%--                    >--%>
+<%--                        Update--%>
+<%--                    </button>--%>
 
 <%--                    <!-- Reset -->--%>
 <%--                    <button type="submit" name="action" value="clearForm" class="btn btn-secondary">Clear</button>--%>
@@ -121,7 +129,7 @@
 <%--                    <tbody>--%>
 
 <%--                    <%--%>
-<%--                        List<Complaint> list = (List<Complaint>) session.getAttribute("complaintEmpList");--%>
+<%--                        List<Complaint> list = (List<Complaint>) request.getSession().getAttribute("complaintEmpList");--%>
 <%--                    %>--%>
 
 <%--                    <%--%>
@@ -136,12 +144,12 @@
 <%--                        <td><%= c.getStatus() %></td>--%>
 <%--                        <td><%= c.getRemark() %></td>--%>
 <%--                        <td>--%>
-<%--                            <form action="admin" method="post" style="display:inline;">--%>
+<%--                            <form action="employee" method="post" style="display:inline;">--%>
 <%--                                <input type="hidden" name="id" value="<%= c.getId() %>">--%>
 <%--                                <input type="hidden" name="action" value="edit">--%>
 <%--                                <button class="btn btn-warning btn-sm">Edit</button>--%>
 <%--                            </form>--%>
-<%--                            <form action="admin" method="post" style="display:inline;">--%>
+<%--                            <form action="employee" method="post" style="display:inline;">--%>
 <%--                                <input type="hidden" name="id" value="<%= c.getId() %>">--%>
 <%--                                <input type="hidden" name="action" value="delete">--%>
 <%--                                <button class="btn btn-danger btn-sm">Delete</button>--%>
