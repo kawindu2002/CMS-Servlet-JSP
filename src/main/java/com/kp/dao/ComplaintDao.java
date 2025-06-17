@@ -100,9 +100,7 @@ public class ComplaintDao {
      
      public boolean updateComplaintForAdmin(Complaint complaint) throws SQLException, ClassNotFoundException {
           return CrudUtil.execute(
-               "UPDATE complaints SET title = ?, description = ?, status = ?, admin_remark = ? WHERE id = ?",
-               complaint.getTitle(),
-               complaint.getDescription(),
+               "UPDATE complaints SET status = ?, admin_remark = ? WHERE id = ?",
                complaint.getStatus(),
                complaint.getRemark(),
                complaint.getId()

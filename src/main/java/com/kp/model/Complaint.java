@@ -31,4 +31,13 @@ public class Complaint {
           this.title = title;
           this.description = description;
      }
+     
+     
+     public static Complaint createWithStatusAndRemark(String id, String status, String remark) {
+          Complaint c = new Complaint(id, "", ""); // call a base constructor
+          c.status = status;       // set status manually
+          c.remark = remark;       // set remark manually
+          return c;
+     }
+     
 }

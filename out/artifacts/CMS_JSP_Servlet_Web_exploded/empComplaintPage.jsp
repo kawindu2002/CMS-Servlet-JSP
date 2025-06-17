@@ -127,7 +127,7 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                    
                     <%
                         List<Complaint> list = (List<Complaint>) request.getSession().getAttribute("complaintEmpList");
                     %>
@@ -137,31 +137,39 @@
                                 for (Complaint c : list) {
 
                         %>
-                        <tr>
-                            <td><%= c.getId() %></td>
-                            <td><%= c.getTitle() %></td>
-                            <td><%= c.getDescription() %></td>
-                            <td><%= c.getStatus() %></td>
-                            <td><%= c.getRemark() %></td>
-                            <td>
-                                <form action="employee" method="post" style="display:inline;">
-                                    <input type="hidden" name="id" value="<%= c.getId() %>">
-                                    <input type="hidden" name="action" value="edit">
-                                    <button class="btn btn-warning btn-sm">Edit</button>
-                                </form>
-                                <form action="employee" method="post" style="display:inline;">
-                                    <input type="hidden" name="id" value="<%= c.getId() %>">
-                                    <input type="hidden" name="action" value="delete">
-                                    <button class="btn btn-danger btn-sm">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        <%
-                                }
+
+                    <tr>
+                        <td><%= c.getId() %></td>
+                        <td><%= c.getTitle() %></td>
+                        <td><%= c.getStatus() %></td>
+                        <td>
+                            <% if (!"resolved".equalsIgnoreCase(c.getStatus())) { %>
+                            <!-- Show Edit button -->
+                            <form action="employee" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="<%= c.getId() %>">
+                                <input type="hidden" name="action" value="edit">
+                                <button class="btn btn-warning btn-sm">Edit</button>
+                            </form>
+
+                            <!-- Show Delete button -->
+                            <form action="employee" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="<%= c.getId() %>">
+                                <input type="hidden" name="action" value="delete">
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                            <% } else { %>
+                            <!-- No buttons if resolved -->
+                            <span class="text-muted">No actions available</span>
+                            <% } %>
+                        </td>
+                    </tr>
+                    <%
                             }
-                        %>
-                        </tbody>
+                        }
+                    %>
+                    </tbody>
                 </table>
+
             </div>
         </div>
     </div>

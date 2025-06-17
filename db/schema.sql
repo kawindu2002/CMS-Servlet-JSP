@@ -16,7 +16,7 @@ CREATE TABLE complaints (
         employee_id VARCHAR(20) NOT NULL,
         title VARCHAR(100) NOT NULL,
         description TEXT NOT NULL,
-        status VARCHAR(20) NOT NULL DEFAULT 'pending',
+        status VARCHAR(20) NOT NULL,
         admin_remark VARCHAR(255) DEFAULT 'not added',
         FOREIGN KEY (employee_id) REFERENCES users(id)
 );
@@ -26,8 +26,6 @@ INSERT INTO users (id, name, email, role, password) VALUES
     ('U001', 'Alice', 'alice@example.com', 'employee', '1111'),
     ('U002', 'Bob', 'bob@example.com', 'employee', '2222'),
     ('U003', 'Charlie', 'charlie@example.com', 'admin', '3333');
-
-
 
 
 INSERT INTO complaints (id, employee_id, title, description, status, admin_remark) VALUES
