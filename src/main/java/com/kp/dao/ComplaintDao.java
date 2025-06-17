@@ -1,7 +1,6 @@
 package com.kp.dao;
 
 import com.kp.model.Complaint;
-import com.kp.model.User;
 import com.kp.util.CrudUtil;
 
 import java.sql.*;
@@ -72,7 +71,6 @@ public class ComplaintDao {
                );
           }
           
-          // If no complaint is found, return null
           return null;
      }
      
@@ -110,8 +108,5 @@ public class ComplaintDao {
      public boolean deleteComplaint(String id) throws SQLException, ClassNotFoundException {
           return CrudUtil.execute("DELETE FROM complaints WHERE id = ?", id);
      }
-     
-     
 }
-
 
