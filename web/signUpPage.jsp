@@ -41,12 +41,15 @@
         <div class="mb-3">
           <label for="name" class="form-label">Your Name</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Joe Doe" required>
+          <div class="text-danger small" id="nameError"></div>
+
         </div>
 
         <!-- Email -->
         <div class="mb-3">
           <label for="email" class="form-label">Your Email</label>
           <input type="email" class="form-control" id="email" name="email" placeholder="example@example.com" required>
+          <div class="text-danger small" id="emailError"></div>
         </div>
 
         <!-- Role -->
@@ -62,6 +65,7 @@
         <div class="mb-3">
           <label for="password" class="form-label">New Password</label>
           <input type="password" class="form-control" id="password" name="password" placeholder="*********" required>
+          <div class="text-danger small" id="passwordError"></div>
         </div>
 
         <!-- Buttons -->
@@ -77,7 +81,9 @@
 <!-- JS Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
+<script src="js/userValidate.js"></script>
 
 </body>
 </html>
