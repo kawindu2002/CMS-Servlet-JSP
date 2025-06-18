@@ -40,15 +40,16 @@
         <!-- 🏷Title Field -->
         <div class="col-12">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title"
-                   placeholder="Broken Chair" required>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Broken Chair" required>
+            <div class="text-danger small" id="titleError"></div>
+
         </div>
 
         <!-- Description Field -->
         <div class="col-12">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3"
-                      placeholder="Describe the issue here..." required></textarea>
+            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Describe the issue here..." required></textarea>
+            <div class="text-danger small" id="descriptionError"></div>
         </div>
 
         <!-- Form Buttons -->
@@ -62,7 +63,9 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous">
+    </script>
+    <script src="js/empSendComValidate.js"></script>
 
 </body>
 </html>
