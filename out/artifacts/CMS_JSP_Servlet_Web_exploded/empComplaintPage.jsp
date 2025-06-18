@@ -50,7 +50,7 @@
 
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-2">
-        <h2>Manage Complaints</h2>
+        <h2>Welcome <strong><%= session.getAttribute("name").toString() %></strong>!</h2>
         <form action="employee" method="post">
             <button type="submit" name="action" value="load" class="btn btn-primary">Load My Complaints</button>
         </form>

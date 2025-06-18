@@ -23,7 +23,6 @@ public class DataSource implements ServletContextListener {
           ds.setInitialSize(5);
           ds.setMaxTotal(5);
           
-          // Save pool in ServletContext (optional, useful if other classes want it)
           ServletContext sc = sce.getServletContext();
           sc.setAttribute("ds", ds);
      }
@@ -41,3 +40,5 @@ public class DataSource implements ServletContextListener {
           }
      }
 }
+
+
