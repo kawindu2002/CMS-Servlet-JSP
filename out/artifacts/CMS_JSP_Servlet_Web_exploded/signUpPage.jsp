@@ -23,7 +23,7 @@
 
 <!-- Main Container -->
 <div class="container">
-  <div class="row justify-content-center align-items-center vh-100">
+  <div class="row justify-content-center align-items-center vh-100 g-5">
 
     <!-- Illustration -->
     <div class="col-md-6 bg-light rounded p-3">

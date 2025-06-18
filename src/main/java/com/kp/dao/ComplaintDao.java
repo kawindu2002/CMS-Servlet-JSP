@@ -1,112 +1,166 @@
 package com.kp.dao;
 
 import com.kp.model.Complaint;
-import com.kp.util.CrudUtil;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class ComplaintDao {
      
-     public String getNextComplaintId() throws SQLException, ClassNotFoundException {
-          String query = "select id from complaints order by id desc limit 1";
-          return CrudUtil.getNextId(query,"C%03d","C001");
+     private final BasicDataSource ds;
+     
+     public ComplaintDao(BasicDataSource ds) {
+          this.ds = ds;
      }
      
-     
-     public ArrayList<Complaint> getAllComplaints() throws SQLException, ClassNotFoundException {
-          ResultSet rst = CrudUtil.execute("SELECT * FROM complaints");
+     public String getNextComplaintId() throws SQLException {
+          String sql = "SELECT id FROM complaints ORDER BY id DESC LIMIT 1";
           
-          ArrayList<Complaint> complaints = new ArrayList<>();
-          
-          while (rst.next()) {
-               Complaint complaint = new Complaint(
-                    rst.getString(1),
-                    rst.getString(2),
-                    rst.getString(3),
-                    rst.getString(4),
-                    rst.getString(5),
-                    rst.getString(6)
-                    
-               );
-               complaints.add(complaint);
+          try (Connection conn = ds.getConnection();
+               PreparedStatement stmt = conn.prepareStatement(sql);
+               ResultSet rs = stmt.executeQuery()) {
+               
+               if (rs.next()) {
+                    String lastId = rs.getString("id"); // example: "C001"
+                    String numberPart = lastId.substring(1); // remove "C"
+                    int nextId = Integer.parseInt(numberPart) + 1;
+                    return String.format("C%03d", nextId);
+               }
           }
+          
+          return "C001"; // Default if no rows exist
+     }
+     
+     public ArrayList<Complaint> getAllComplaints() throws SQLException {
+          ArrayList<Complaint> complaints = new ArrayList<>();
+          String sql = "SELECT * FROM complaints";
+          
+          try (Connection conn = ds.getConnection();
+               PreparedStatement stmt = conn.prepareStatement(sql);
+               ResultSet rst = stmt.executeQuery()) {
+               
+               while (rst.next()) {
+                    complaints.add(new Complaint(
+                         rst.getString("id"),
+                         rst.getString("employee_id"),
+                         rst.getString("title"),
+                         rst.getString("description"),
+                         rst.getString("status"),
+                         rst.getString("admin_remark")
+                    ));
+               }
+          }
+          
           return complaints;
      }
      
-     public ArrayList<Complaint> getComplaintOfEmpById(String id) throws SQLException, ClassNotFoundException {
+     public ArrayList<Complaint> getComplaintOfEmpById(String id) throws SQLException {
           ArrayList<Complaint> complaints = new ArrayList<>();
           
-          ResultSet rst = CrudUtil.execute(
-               "SELECT c.id, c.employee_id, c.title, c.description, c.status, c.admin_remark " +
-                    "FROM complaints c " +
-                    "JOIN users u ON c.employee_id = u.id " +
-                    "WHERE u.id = ?", id);
+          String sql = "SELECT c.id, c.employee_id, c.title, c.description, c.status, c.admin_remark " +
+               "FROM complaints c " +
+               "JOIN users u ON c.employee_id = u.id " +
+               "WHERE u.id = ?";
           
-          while (rst.next()) {
-               complaints.add(new Complaint(
-                    rst.getString("id"),
-                    rst.getString("employee_id"),
-                    rst.getString("title"),
-                    rst.getString("description"),
-                    rst.getString("status"),
-                    rst.getString("admin_remark")
-               ));
+          try (Connection conn = ds.getConnection();
+               PreparedStatement stmt = conn.prepareStatement(sql)) {
+               
+               stmt.setString(1, id);
+               
+               try (ResultSet rst = stmt.executeQuery()) {
+                    while (rst.next()) {
+                         complaints.add(new Complaint(
+                              rst.getString("id"),
+                              rst.getString("employee_id"),
+                              rst.getString("title"),
+                              rst.getString("description"),
+                              rst.getString("status"),
+                              rst.getString("admin_remark")
+                         ));
+                    }
+               }
           }
           
           return complaints;
      }
      
-     public Complaint getComplaintByComId(String id) throws SQLException, ClassNotFoundException {
-          ResultSet rst = CrudUtil.execute("SELECT * FROM complaints WHERE id = ?", id);
-          
-          if (rst.next()) {
-               return new Complaint(
-                    rst.getString("id"),
-                    rst.getString("employee_id"),
-                    rst.getString("title"),
-                    rst.getString("description"),
-                    rst.getString("status"),
-                    rst.getString("admin_remark")
-               );
+     public Complaint getComplaintByComId(String id) throws SQLException {
+          String sql = "SELECT * FROM complaints WHERE id = ?";
+          try (Connection conn = ds.getConnection();
+               PreparedStatement stmt = conn.prepareStatement(sql)) {
+               
+               stmt.setString(1, id);
+               try (ResultSet rst = stmt.executeQuery()) {
+                    if (rst.next()) {
+                         return new Complaint(
+                              rst.getString("id"),
+                              rst.getString("employee_id"),
+                              rst.getString("title"),
+                              rst.getString("description"),
+                              rst.getString("status"),
+                              rst.getString("admin_remark")
+                         );
+                    }
+               }
           }
-          
           return null;
      }
      
-     
-     public boolean saveComplaint(Complaint complaint)  throws SQLException, ClassNotFoundException {
-          return CrudUtil.execute(
-               "INSERT INTO complaints (id,employee_id,title,description) VALUES (?, ?, ?,?)",
-               
-               complaint.getId(),
-               complaint.getEmployee_id(),
-               complaint.getTitle(),
-               complaint.getDescription()
+     public boolean saveComplaint(Complaint complaint) throws SQLException {
+          String sql = "INSERT INTO complaints (id, employee_id, title, description) VALUES (?, ?, ?, ?)";
           
-          );
+          try (Connection conn = ds.getConnection();
+               PreparedStatement stmt = conn.prepareStatement(sql)) {
+               
+               stmt.setString(1, complaint.getId());
+               stmt.setString(2, complaint.getEmployee_id());
+               stmt.setString(3, complaint.getTitle());
+               stmt.setString(4, complaint.getDescription());
+               
+               return stmt.executeUpdate() > 0;
+          }
      }
      
-     public boolean updateComplaintForEmp(Complaint complaint) throws SQLException, ClassNotFoundException {
-          return CrudUtil.execute(
-               "UPDATE complaints SET title = ?, description = ? WHERE id = ?",
-               complaint.getTitle(),
-               complaint.getDescription(),
-               complaint.getId()
-          );
+     public boolean updateComplaintForAdmin(Complaint complaint) throws SQLException {
+          String sql = "UPDATE complaints SET status = ?, admin_remark = ? WHERE id = ?";
+          
+          try (Connection conn = ds.getConnection();
+               PreparedStatement stmt = conn.prepareStatement(sql)) {
+               
+               stmt.setString(1, complaint.getStatus());
+               stmt.setString(2, complaint.getRemark());
+               stmt.setString(3, complaint.getId());
+               
+               return stmt.executeUpdate() > 0;
+          }
      }
      
-     public boolean updateComplaintForAdmin(Complaint complaint) throws SQLException, ClassNotFoundException {
-          return CrudUtil.execute(
-               "UPDATE complaints SET status = ?, admin_remark = ? WHERE id = ?",
-               complaint.getStatus(),
-               complaint.getRemark(),
-               complaint.getId()
-          );
+     public boolean updateComplaintForEmp(Complaint complaint) throws SQLException {
+          String sql = "UPDATE complaints SET title = ?, description = ? WHERE id = ?";
+          
+          try (Connection conn = ds.getConnection();
+               PreparedStatement stmt = conn.prepareStatement(sql)) {
+               
+               stmt.setString(1, complaint.getTitle());
+               stmt.setString(2, complaint.getDescription());
+               stmt.setString(3, complaint.getId());
+               
+               return stmt.executeUpdate() > 0;
+          }
      }
      
-     public boolean deleteComplaint(String id) throws SQLException, ClassNotFoundException {
-          return CrudUtil.execute("DELETE FROM complaints WHERE id = ?", id);
+     public boolean deleteComplaint(String id) throws SQLException {
+          String sql = "DELETE FROM complaints WHERE id = ?";
+          
+          try (Connection conn = ds.getConnection();
+               PreparedStatement stmt = conn.prepareStatement(sql)) {
+               
+               stmt.setString(1, id);
+               return stmt.executeUpdate() > 0;
+          }
      }
+     
 }
+
 

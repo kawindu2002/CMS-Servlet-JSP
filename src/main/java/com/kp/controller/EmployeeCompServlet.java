@@ -2,7 +2,7 @@ package com.kp.controller;
 
 import com.kp.dao.ComplaintDao;
 import com.kp.model.Complaint;
-import com.kp.util.CrudUtil;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,51 +19,34 @@ import java.util.List;
 @WebServlet("/employee")
 public class EmployeeCompServlet extends HttpServlet {
      
+     private BasicDataSource ds;
+     
+     @Override
+     public void init() throws ServletException {
+          ds = (BasicDataSource) getServletContext().getAttribute("ds");
+     }
+     
+     
      @Override
      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
           String action = req.getParameter("action");
           
-          if ("load".equals(action)) {
-               try {
-                    loadEmployeeComTable(req, resp);
-               } catch (Exception e) {
-                    throw new RuntimeException(e);
+          try {
+               switch (action) {
+                    case "load" -> loadEmployeeComTable(req, resp);
+                    case "save" -> saveEmployeeComData(req, resp);
+                    case "add" -> {
+                         RequestDispatcher rd = req.getRequestDispatcher("dashboard.jsp?page=employeeSave");
+                         rd.forward(req, resp);
+                    }
+                    case "clearForm" -> clearEmployeeComData(req, resp);
+                    case "edit" -> editEmployeeComData(req, resp);
+                    case "update" -> updateEmployeeComData(req, resp);
+                    case "delete" -> deleteEmployeeComData(req, resp);
+                    default -> resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
                }
-          }else if ("add".equals(action)) {
-               RequestDispatcher rd = req.getRequestDispatcher("dashboard.jsp?page=employeeSave");
-               rd.forward(req, resp);
-          }else if ("save".equals(action)) {
-               try {
-                    saveEmployeeComData(req, resp);
-               } catch (Exception e) {
-                    throw new RuntimeException(e);
-               }
-          }else if ("clearForm".equals(action)) {
-               try {
-                    clearEmployeeComData(req, resp);
-               } catch (Exception e) {
-                    throw new RuntimeException(e);
-               }
-          }else if ("edit".equals(action)) {
-               try {
-                    editEmployeeComData(req, resp);
-               } catch (Exception e) {
-                    throw new RuntimeException(e);
-               }
-          } else if ("update".equals(action)) {
-               try {
-                    updateEmployeeComData(req, resp);
-               } catch (Exception e) {
-                    throw new RuntimeException(e);
-               }
-          }else if ("delete".equals(action)) {
-               try {
-                    deleteEmployeeComData(req, resp);
-               } catch (Exception e) {
-                    throw new RuntimeException(e);
-               }
-          }else {
-               resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
+          } catch (Exception e) {
+               throw new RuntimeException(e);
           }
      }
      
@@ -70,7 +54,7 @@ public class EmployeeCompServlet extends HttpServlet {
           HttpSession session = req.getSession();
           String id = (String) session.getAttribute("userId");
           
-          ComplaintDao dao = new ComplaintDao();
+          ComplaintDao dao = new ComplaintDao(ds);
           List<Complaint> list = dao.getComplaintOfEmpById(id);
           session.setAttribute("complaintEmpList", list);
           
@@ -78,7 +62,7 @@ public class EmployeeCompServlet extends HttpServlet {
      }
      
      private void saveEmployeeComData(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ClassNotFoundException {
-          ComplaintDao complaintDao = new ComplaintDao();
+          ComplaintDao complaintDao = new ComplaintDao(ds);
           HttpSession session = req.getSession();
           
           String id = complaintDao.getNextComplaintId();
@@ -113,7 +97,7 @@ public class EmployeeCompServlet extends HttpServlet {
           }
           
           if (!title.isEmpty() && !description.isEmpty()){
-               ComplaintDao complaintDao = new ComplaintDao();
+               ComplaintDao complaintDao = new ComplaintDao(ds);
                Complaint complaint = new Complaint(id,title,description);
                
                if (complaintDao.updateComplaintForEmp(complaint)) {
@@ -128,7 +112,7 @@ public class EmployeeCompServlet extends HttpServlet {
      
      private void deleteEmployeeComData(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ClassNotFoundException {
           String id = req.getParameter("id");
-          ComplaintDao complaintDao = new ComplaintDao();
+          ComplaintDao complaintDao = new ComplaintDao(ds);
           if (complaintDao.deleteComplaint(id)) {
                resp.sendRedirect("dashboard.jsp?page=employeeView&success=delete_ok");
 
@@ -141,7 +125,7 @@ public class EmployeeCompServlet extends HttpServlet {
           throws ServletException, IOException, SQLException, ClassNotFoundException {
           
           String id = request.getParameter("id");
-          ComplaintDao complaintDao = new ComplaintDao();
+          ComplaintDao complaintDao = new ComplaintDao(ds);
           Complaint selectedComplaint = complaintDao.getComplaintByComId(id);
           request.getSession().setAttribute("selectedComplaint", selectedComplaint);
           
@@ -151,12 +135,10 @@ public class EmployeeCompServlet extends HttpServlet {
           
           request.getRequestDispatcher("dashboard.jsp?page=employeeView").forward(request, response);
      }
-
      
      private void clearEmployeeComData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
           request.getSession().setAttribute("selectedComplaint", null);
           response.sendRedirect("dashboard.jsp?page=employeeView");
      }
-     
 }
 

@@ -8,17 +8,26 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
 
 @WebServlet("/signin")
 public class SignInServlet extends HttpServlet {
+     
+     private BasicDataSource ds;
+     
+     @Override
+     public void init() throws ServletException {
+          ds = (BasicDataSource) getServletContext().getAttribute("ds");
+     }
+     
      @Override
      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
           String email = req.getParameter("email");
           String password = req.getParameter("password");
           
-          UserDao userDao = new UserDao();
+          UserDao userDao = new UserDao(ds);
           User user = null;
           try {
                user = userDao.findByEmail(email);

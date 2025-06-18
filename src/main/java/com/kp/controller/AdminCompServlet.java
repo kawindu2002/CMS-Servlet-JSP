@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,50 +17,37 @@ import java.util.List;
 
 @WebServlet("/admin")
 public class AdminCompServlet extends HttpServlet {
-
+     
+     private BasicDataSource ds;
+     
+     @Override
+     public void init() throws ServletException {
+          ds = (BasicDataSource) getServletContext().getAttribute("ds");
+     }
+     
      @Override
      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
           String action = req.getParameter("action");
-
-          if ("load".equals(action)) {
-               try {
-                    loadAdminComTable(req, resp);
-               } catch (Exception e) {
-                    throw new RuntimeException(e);
+          
+          try {
+               switch (action) {
+                    case "load" -> loadAdminComTable(req, resp);
+                    case "clearForm" -> clearAdminComData(req, resp);
+                    case "edit" -> editAdminComData(req, resp);
+                    case "update" -> updateAdminComData(req, resp);
+                    case "delete" -> deleteAdminComData(req, resp);
+                    default -> resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
                }
-          }else if ("clearForm".equals(action)) {
-               try {
-                    clearAdminComData(req, resp);
-               } catch (Exception e) {
-                    throw new RuntimeException(e);
-               }
-          }else if ("edit".equals(action)) {
-               try {
-                    editAdminComData(req, resp);
-               } catch (Exception e) {
-                    throw new RuntimeException(e);
-               }
-          } else if ("update".equals(action)) {
-               try {
-                    updateAdminComData(req, resp);
-               } catch (Exception e) {
-                    throw new RuntimeException(e);
-               }
-          }else if ("delete".equals(action)) {
-               try {
-                    deleteAdminComData(req, resp);
-               } catch (Exception e) {
-                    throw new RuntimeException(e);
-               }
-          }else {
-               resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
+          } catch (Exception e) {
+               throw new RuntimeException(e);
           }
      }
-
+     
+     
      private void loadAdminComTable(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ClassNotFoundException, ServletException {
           HttpSession session = req.getSession();
 
-          ComplaintDao dao = new ComplaintDao();
+          ComplaintDao dao = new ComplaintDao(ds);
           List<Complaint> list = dao.getAllComplaints();
           session.setAttribute("complaintAdminList", list);
           
@@ -84,7 +72,7 @@ public class AdminCompServlet extends HttpServlet {
           }
 
           if (status != null && !status.isEmpty() && remark != null && !remark.isEmpty()) {
-              ComplaintDao complaintDao = new ComplaintDao();
+              ComplaintDao complaintDao = new ComplaintDao(ds);
                Complaint complaint = Complaint.createWithStatusAndRemark(id, status, remark);
 
               if (complaintDao.updateComplaintForAdmin(complaint)) {
@@ -100,7 +88,7 @@ public class AdminCompServlet extends HttpServlet {
 
      private void deleteAdminComData(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ClassNotFoundException {
           String id = req.getParameter("id");
-          ComplaintDao complaintDao = new ComplaintDao();
+          ComplaintDao complaintDao = new ComplaintDao(ds);
           if (complaintDao.deleteComplaint(id)) {
                resp.sendRedirect("dashboard.jsp?page=adminView&success=delete_ok");
 
@@ -113,7 +101,7 @@ public class AdminCompServlet extends HttpServlet {
           throws ServletException, IOException, SQLException, ClassNotFoundException {
 
           String id = request.getParameter("id");
-          ComplaintDao complaintDao = new ComplaintDao();
+          ComplaintDao complaintDao = new ComplaintDao(ds);
           Complaint selectedComplaint = complaintDao.getComplaintByComId(id);
           request.getSession().setAttribute("selectedComplaint", selectedComplaint);
 
@@ -124,8 +112,7 @@ public class AdminCompServlet extends HttpServlet {
           request.getRequestDispatcher("dashboard.jsp?page=adminView").forward(request, response);
 
      }
-
-
+     
      private void clearAdminComData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
           request.getSession().setAttribute("selectedComplaint", null);
           response.sendRedirect("dashboard.jsp?page=adminView");

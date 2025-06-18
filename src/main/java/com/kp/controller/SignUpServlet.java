@@ -7,14 +7,22 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
 
 @WebServlet("/signup")
 public class SignUpServlet extends HttpServlet {
+     private BasicDataSource ds;
+     
+     @Override
+     public void init() throws ServletException {
+          ds = (BasicDataSource) getServletContext().getAttribute("ds");
+     }
+     
      @Override
      protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-          UserDao dao = new UserDao();
+          UserDao dao = new UserDao(ds);
           
           String id = null;
           try {
@@ -27,11 +35,9 @@ public class SignUpServlet extends HttpServlet {
           String role = req.getParameter("role");
           String password = req.getParameter("password");
           
-          UserDao userDao = new UserDao();
-          
           User user = new User(id,name,email,role,password);
           try {
-               if (userDao.saveUser(user)) {
+               if (dao.saveUser(user)) {
                     resp.sendRedirect("signInPage.jsp?login=success");
                     
                }else{
