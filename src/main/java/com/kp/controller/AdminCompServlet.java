@@ -79,8 +79,8 @@ public class AdminCompServlet extends HttpServlet {
                return;
           }
           
-          if (remark == null || remark.trim().isEmpty()) {
-               remark = "add remark";  // default remark
+          if (remark == null || remark.isEmpty()) {
+               remark = "add remark";
           }
 
           if (status != null && !status.isEmpty() && remark != null && !remark.isEmpty()) {

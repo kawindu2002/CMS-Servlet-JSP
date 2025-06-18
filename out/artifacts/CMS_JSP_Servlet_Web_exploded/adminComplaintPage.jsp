@@ -81,10 +81,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="remark" class="form-label">Remark</label>
-                    <textarea class="form-control" id="remark" name="remark" rows="2" placeholder="Add remark">
-                        <%= selected != null ? selected.getRemark() : "" %>
-                    </textarea>
+                    <textarea class="form-control" id="remark" name="remark" rows="2" placeholder="Add remark"><%= (selected != null ? selected.getRemark() : "") %></textarea>
+
                 </div>
             </div>
         </div>
