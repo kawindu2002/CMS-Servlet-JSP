@@ -17,7 +17,6 @@ document.querySelector("form").addEventListener("submit", function (e) {
         // Name Validation
         if (name.value.trim().length < 3) {
                 nameError.textContent = "Name must be at least 3 characters.";
-                name.textContent = "";
                 valid = false;
         }
         
@@ -25,14 +24,12 @@ document.querySelector("form").addEventListener("submit", function (e) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email.value)) {
                 emailError.textContent = "Please enter a valid email.";
-                email.textContent = "";
                 valid = false;
         }
         
         // Password Validation
         if (password.value.length < 6) {
                 passwordError.textContent = "Password must be at least 6 characters.";
-                password.textContent = "";
                 valid = false;
         }
         

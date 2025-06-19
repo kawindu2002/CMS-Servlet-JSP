@@ -18,22 +18,7 @@
         return;
     }
 
-    String success = request.getParameter("success");
-    String error = request.getParameter("error");
 %>
-
-<%-- Alert Messages --%>
-<% if ("update_ok".equals(success)) { %>
-        <div class="alert alert-success">🔄 Complaint updated successfully!</div>
-<% } else if ("delete_ok".equals(success)) { %>
-        <div class="alert alert-success">🗑️ Complaint deleted successfully!</div>
-<% } else if ("update_failed".equals(error)) { %>
-        <div class="alert alert-danger">❌ Update failed. Please try again!</div>
-<% } else if ("save_failed".equals(error)) { %>
-        <div class="alert alert-danger">❌ Save failed. Please try again!</div>
-<% } else if ("delete_failed".equals(error)) { %>
-        <div class="alert alert-danger">❌ Delete failed. Try again!</div>
-<% } %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -154,9 +139,11 @@
 </div>
 
 <!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
+<script src="js/databaseActionAlerts.js"></script>
 
 </body>
 </html>

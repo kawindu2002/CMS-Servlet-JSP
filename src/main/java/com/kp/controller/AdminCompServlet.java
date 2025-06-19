@@ -20,6 +20,7 @@ public class AdminCompServlet extends HttpServlet {
      
      private BasicDataSource ds;
      
+     
      @Override
      public void init() throws ServletException {
           ds = (BasicDataSource) getServletContext().getAttribute("ds");
@@ -42,7 +43,6 @@ public class AdminCompServlet extends HttpServlet {
                throw new RuntimeException(e);
           }
      }
-     
      
      private void loadAdminComTable(HttpServletRequest req, HttpServletResponse resp) throws IOException, SQLException, ClassNotFoundException, ServletException {
           HttpSession session = req.getSession();
@@ -115,7 +115,7 @@ public class AdminCompServlet extends HttpServlet {
      
      private void clearAdminComData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException {
           request.getSession().setAttribute("selectedComplaint", null);
-          response.sendRedirect("dashboard.jsp?page=adminView");
+          response.sendRedirect( "dashboard.jsp?page=adminView");
           
      }
 

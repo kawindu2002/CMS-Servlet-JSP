@@ -20,8 +20,7 @@ public class SignOutServlet extends HttpServlet {
           session.removeAttribute("role");
           session.removeAttribute("password");
           session.invalidate();
-          resp.sendRedirect("signInPage.jsp");
+          resp.sendRedirect("signInPage.jsp?success=logout_ok");
           
      }
 }
-

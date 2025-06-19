@@ -44,9 +44,10 @@ public class SignInServlet extends HttpServlet {
                session.setAttribute("password", user.getPassword());
                
                if (user.getRole().equals("admin")) {
-                    resp.sendRedirect("dashboard.jsp?page=adminView");
+                    resp.sendRedirect("dashboard.jsp?page=adminView&success=login_ok");
+                    
                }else if (user.getRole().equals("employee")){
-                    resp.sendRedirect("dashboard.jsp?page=employeeView");
+                    resp.sendRedirect("dashboard.jsp?page=employeeView&success=login_ok");
                }
                
           }else{
@@ -54,5 +55,4 @@ public class SignInServlet extends HttpServlet {
           }
      }
 }
-
 
