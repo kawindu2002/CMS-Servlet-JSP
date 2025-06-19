@@ -40,7 +40,7 @@
         <!-- 🏷Title Field -->
         <div class="col-12">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Broken Chair" required>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Broken Chair" >
             <div class="text-danger small" id="titleError"></div>
 
         </div>
@@ -48,7 +48,7 @@
         <!-- Description Field -->
         <div class="col-12">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Describe the issue here..." required></textarea>
+            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Describe the issue here..." ></textarea>
             <div class="text-danger small" id="descriptionError"></div>
         </div>
 

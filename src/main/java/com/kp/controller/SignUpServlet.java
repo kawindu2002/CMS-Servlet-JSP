@@ -39,7 +39,6 @@ public class SignUpServlet extends HttpServlet {
           try {
                if (dao.saveUser(user)) {
                     resp.sendRedirect("signInPage.jsp?login=success");
-                    
                }else{
                     resp.sendRedirect("signUpPage.jsp");
                }

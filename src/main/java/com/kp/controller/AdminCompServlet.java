@@ -50,7 +50,6 @@ public class AdminCompServlet extends HttpServlet {
           ComplaintDao dao = new ComplaintDao(ds);
           List<Complaint> list = dao.getAllComplaints();
           session.setAttribute("complaintAdminList", list);
-          
           resp.sendRedirect("dashboard.jsp?page=adminView");
      }
 
@@ -91,6 +90,7 @@ public class AdminCompServlet extends HttpServlet {
           ComplaintDao complaintDao = new ComplaintDao(ds);
           if (complaintDao.deleteComplaint(id)) {
                resp.sendRedirect("dashboard.jsp?page=adminView&success=delete_ok");
+               
 
           } else {
                resp.sendRedirect("dashboard.jsp?page=adminView&error=delete_failed");
@@ -98,7 +98,7 @@ public class AdminCompServlet extends HttpServlet {
      }
 
      private void editAdminComData(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException, SQLException, ClassNotFoundException {
+          throws ServletException, IOException, SQLException {
 
           String id = request.getParameter("id");
           ComplaintDao complaintDao = new ComplaintDao(ds);
