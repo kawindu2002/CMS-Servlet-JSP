@@ -7,8 +7,7 @@ This project is a part of my academic submission for the **IJSE GDSE program**, 
 
 ## 🌐 Live Preview (Optional)
 
-If deployed online, you can add a link here:
-🔗 _Coming Soon_ or _Deployed Locally via Tomcat_
+🔗 _Deployed Locally via Tomcat_
 
 ---
 
