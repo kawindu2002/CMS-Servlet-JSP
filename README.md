@@ -18,14 +18,14 @@ This project is a part of my academic submission for the **IJSE GDSE program**, 
 
 ## 🛠️ Tech Stack
 
-| Layer        | Technology              |
-|--------------|--------------------------|
-| Frontend     | HTML, CSS, JSP           |
-| Backend      | Java Servlets, JDBC      |
-| Database     | MySQL                    |
-| Build Tool   | Apache Tomcat (WAR)      |
-| Database Pool| Custom DBConnectionPool  |
-| Architecture | MVC (Model View Controller) |
+| Layer        | Technology                           |
+|--------------|--------------------------------------|
+| Frontend     | HTML, CSS, JSP (Only for validation) |
+| Backend      | Java Servlets, JDBC                  |
+| Database     | MySQL                                |
+| Build Tool   | Apache Tomcat (WAR)                  |
+| Database Pool| Custom DBConnectionPool              |
+| Architecture | MVC (Model View Controller)          |
 
 ---
 
