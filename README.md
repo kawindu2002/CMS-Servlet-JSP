@@ -79,8 +79,8 @@ CMS-Servlet-JSP/
 
 ## 📬 Contact
 
-**Developer:** Dinuka Lakmal  
-**GitHub:** [Dinuka Lakmal](https://github.com/Dinuka0512)  
-**Email:** Dinuka0512@gmail.com 
+**Developer:** Kawindu Priyashan  
+**GitHub:** [Kawindu Priyashan](https://github.com/kawindu2002)  
+**Email:** kawindupriyashan@gmail.com 
 
 
