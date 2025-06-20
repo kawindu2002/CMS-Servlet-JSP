@@ -96,11 +96,12 @@ CMS-Servlet-JSP/
 ## 📚 Learning Objectives
 This project was created to:
 
-   -Understand the JSP-Servlet architecture in depth
-   -Learn how to manage HTTP form data using request.getParameter()
-   -Use JavaBeans and DAOs for clean separation of logic
-   -Handle sessions, redirects, and error control without frameworks
-   -Build a fully functional CRUD app using pure Java EE concepts
+- [ ] Understand the JSP-Servlet architecture in depth
+- [ ] Learn how to manage HTTP form data using request.getParameter()
+- [ ] Use JavaBeans and DAOs for clean separation of logic
+- [ ] Handle sessions, redirects, and error control without frameworks
+- [ ] Build a fully functional CRUD app using pure Java EE concepts
+ 
    
 ---
 
