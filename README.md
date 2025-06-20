@@ -54,19 +54,21 @@ CMS-Servlet-JSP/
 ## 🧑‍💻 How to Run Locally
 
 1. **Clone the repository**
+   
    ```bash
    git clone https://github.com/kawindu2002/CMS-Servlet-JSP.git
    cd CMS-Servlet-JSP
 
-2. Import the SQL Dump
+3. Import the SQL Dump
 
-  - Open MySQL Workbench or phpMyAdmin.
-  - Create a new database: cms_db
-  - Import /db/schema.sql from the project directory.
+     - Open MySQL Workbench or phpMyAdmin.
+     - Create a new database: cms_db
+     - Import /db/schema.sql from the project directory.
 
-3. Configure DB in Servlet
+4. Configure DB in Servlet
    
    - Update DB credentials in your DBUtil.java (or similar class):
+     
    ```bash
    String url = "jdbc:mysql://localhost:3306/cms_db";
    String user = "root";
@@ -77,6 +79,7 @@ CMS-Servlet-JSP/
    - Open the project in IntelliJ IDEA or Eclipse.
    - Deploy to Apache Tomcat (v9+).
    - Access the app via:
+     
    ```bash
    http://localhost:8080/CMS-Servlet-JSP/
 
