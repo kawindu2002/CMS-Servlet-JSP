@@ -32,10 +32,8 @@ git clone https://github.com/kawindu2002/CMS-Servlet-JSP.git
 cd CMS-Servlet-JSP
 
 
-================================================================================
 
-
-# 🖥️ JSP-Based Complaint Management System (CMS)
+## 🖥️ JSP-Based Complaint Management System (CMS)
 
 A full-stack web application built using **Java (JSP/Servlets)**, **JDBC**, and **MySQL**, designed to manage user complaints and admin responses in an efficient and organized manner.
 
