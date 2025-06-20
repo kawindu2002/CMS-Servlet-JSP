@@ -56,8 +56,8 @@ CMS-Servlet-JSP/
 1. **Clone the repository**
    ```bash
    git clone https://github.com/kawindu2002/CMS-Servlet-JSP.git
-  
-  
+   cd CMS-Servlet-JSP
+
 ## ✅ To-Do (Optional Enhancements)
 
 - [ ] 🔐 Add login authentication with password hashing
