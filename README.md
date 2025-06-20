@@ -67,7 +67,7 @@ CMS-Servlet-JSP/
        CREATE DATABASE cms_ijse;
        
      - Then run:
-      ```bash
+       ```bash
        mysql -u root -p cms_ijse < db/schema.sql 
 
 4. Configure DB in Servlet
