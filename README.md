@@ -61,17 +61,14 @@ CMS-Servlet-JSP/
 
 3. Import the SQL Dump
 
-==========================
-
-   ```bash
-   git clone https://github.com/kawindu2002/CMS-Servlet-JSP.git
-   cd CMS-Servlet-JSP
-==========================
-
-
-     - Open MySQL Workbench or phpMyAdmin.
+     - Create an empty database in MySQL:
      - Create a new database: cms_db
-     - Import /db/schema.sql from the project directory.
+       ```bash
+       CREATE DATABASE cms_ijse;
+       
+     - Then run:
+      ```bash
+       mysql -u root -p cms_ijse < db/schema.sql 
 
 4. Configure DB in Servlet
    
