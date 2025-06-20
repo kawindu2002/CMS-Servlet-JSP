@@ -74,10 +74,10 @@ CMS-Servlet-JSP/
    
    - Update DB credentials in your DBUtil.java (or similar class):
      
-   ```bash
-   String url = "jdbc:mysql://localhost:3306/cms_db";
-   String user = "root";
-   String password = "";
+      ```bash
+      String url = "jdbc:mysql://localhost:3306/cms_db";
+      String user = "root";
+      String password = "";
    
 5. Run the App
 
@@ -85,8 +85,8 @@ CMS-Servlet-JSP/
    - Deploy to Apache Tomcat (v9+).
    - Access the app via:
      
-   ```bash
-   http://localhost:8080/CMS-Servlet-JSP/
+      ```bash
+      http://localhost:8080/CMS-Servlet-JSP/
 
 ---
 
