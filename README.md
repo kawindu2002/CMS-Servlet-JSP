@@ -58,6 +58,28 @@ CMS-Servlet-JSP/
    git clone https://github.com/kawindu2002/CMS-Servlet-JSP.git
    cd CMS-Servlet-JSP
 
+2. Import the SQL Dump
+
+  - Open MySQL Workbench or phpMyAdmin.
+  - Create a new database: cms_db
+  - Import /db/schema.sql from the project directory.
+
+3. Configure DB in Servlet
+   
+   - Update DB credentials in your DBUtil.java (or similar class):
+   ```bash
+   String url = "jdbc:mysql://localhost:3306/cms_db";
+   String user = "root";
+   String password = "";
+   
+5. Run the App
+
+   - Open the project in IntelliJ IDEA or Eclipse.
+   - Deploy to Apache Tomcat (v9+).
+   - Access the app via:
+   ```bash
+   http://localhost:8080/CMS-Servlet-JSP/
+
 ## ✅ To-Do (Optional Enhancements)
 
 - [ ] 🔐 Add login authentication with password hashing
