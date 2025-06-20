@@ -40,17 +40,22 @@ A full-stack web application built using **Java (JSP/Servlets)**, **JDBC**, and 
 ## 📂 Project Structure
 
 ```
-jspcmsfinal/
-│
-├── dto/ # Data Transfer Objects
-├── model/ # Business logic / DAO layer
-├── util/ # Session helpers, connection pooling
-├── controller/ # Servlet-based controllers
-├── views/ # JSP pages (user/admin)
-├── css/ # Stylesheets
-├── sql/ # (Optional) Database schema
-└── README.md
+CMS-Servlet-JSP/
+├── /src/
+│   ├── com.kp.controller       # Java Servlets (Controllers)
+│   ├── com.kp.dao              # DAO classes for DB interaction
+│   ├── com.kp.model            # POJOs (JavaBeans)
+│   └── com.kp.util             # DB utilities
+├── /web/
+│   ├── /pages                  # JSP files (User & Admin views)
+│   ├── /assets                 # CSS, JS, images
+│   └── WEB-INF/web.xml         # Deployment descriptor
+├── /db/
+│   └── schema.sql              # SQL dump (ready to import)
+└── README.md                   # You’re here!
+
 ```
+
 
 ---
 
