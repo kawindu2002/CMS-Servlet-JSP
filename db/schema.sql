@@ -39,11 +39,3 @@ INSERT INTO complaints (id, employee_id, title, description, status, admin_remar
            ('C003', 'U001', 'Printer Jam', 'Printer keeps jamming papers frequently.', 'resolved', 'Replaced printer rollers');
 
 
-
-# 🔧 How to Import:
-# Create an empty database in MySQL:
-# CREATE DATABASE cms_ijse;
-
-# Then run:
-# mysql -u root -p cms_ijse < db/schema.sql
-#
