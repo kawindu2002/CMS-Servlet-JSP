@@ -55,7 +55,8 @@ CMS-Servlet-JSP/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Dinuka0512/Complaint-Management-System-CMS.git
+   git clone https://github.com/kawindu2002/CMS-Servlet-JSP.git
+  
   
 ## ✅ To-Do (Optional Enhancements)
 
