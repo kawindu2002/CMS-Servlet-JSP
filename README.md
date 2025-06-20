@@ -1,7 +1,7 @@
 # 🖥️ JSP-Based Complaint Management System (CMS)
 
-Welcome to **CMS-Servlet-JSP**, a web-based Complaint Management System built using **JSP**, **Servlets**, and **MySQL** following the **MVC architecture**.  
-This project is a part of my academic submission for the **IJSE GDSE program**, focused on understanding how web systems handle structured data flow and user interactions without external frameworks.
+A full-stack web application built using **Java (JSP/Servlets)**, **JDBC**, and **MySQL**, designed to manage user complaints and admin responses in an efficient and organized manner.
+
 ---
 
 ## 🚀 Features
