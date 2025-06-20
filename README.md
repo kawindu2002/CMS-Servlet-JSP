@@ -110,10 +110,10 @@ This project was created to:
 ## 🤝 Contributions
 This is a solo learning project, but I always welcome:
 
-   -Code suggestions
-   -Bug fixes
-   -README improvements
-   -Feel free to fork and submit a pull request.
+   - Code suggestions
+   - Bug fixes
+   - README improvements
+   - Feel free to fork and submit a pull request.
 
 ---
 
