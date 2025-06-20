@@ -105,12 +105,20 @@ This project was created to:
    
 ---
 
-## 🙌 Acknowledgements
+## 🤝 Contributions
+This is a solo learning project, but I always welcome:
 
-- 💻 Java EE Servlet API  
-- 🐱 Apache Tomcat  
-- 🐬 MySQL  
-- 🧠 StackOverflow & Developer Community ❤️  
+   -Code suggestions
+   -Bug fixes
+   -README improvements
+   -Feel free to fork and submit a pull request.
+
+---
+
+## 🌟 Support
+
+If this helped you understand JSP-Servlet systems or you found it interesting,
+drop a ⭐ on the repo to support more such projects.
 
 ---
 
