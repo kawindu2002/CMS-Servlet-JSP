@@ -6,21 +6,12 @@ A full-stack web application built using **Java (JSP/Servlets)**, **JDBC**, and 
 
 ## 🚀 Features
 
-### 👤 User Panel:
-- Register and log in
-- Submit complaints (with subject & message)
-- Track the status of submitted complaints
-- View answers from the admin
-
-### 🛠️ Admin Panel:
-- View all submitted complaints
-- Respond to complaints with answers
-- Manage users and complaint statuses
-- Track solved, pending, and weekly statistics
-
-### 📊 Dashboard:
-- Dynamic overview of pending vs solved complaints
-- Easy navigation for both users and admins
+- 📝 **Complaint Submission**: Users can submit complaints with title, description, and category.
+- 🧑‍💼 **Admin Panel**: Admins can view, filter, and update complaint statuses.
+- 🔐 **Authentication**: Basic user login system with session management.
+- 📊 **Dashboard View**: Role-based dashboards for users and admins.
+- 🚫 **Cache Control**: Prevents back navigation after logout.
+- 🖥️ **JSP + Servlet Integration**: MVC-based flow with form handling and DB communication.
 
 ---
 
